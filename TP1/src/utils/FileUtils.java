@@ -1,8 +1,8 @@
+package utils;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,9 +17,8 @@ public class FileUtils {
 		lista.add("E");
 		lista.add("F");
 		return lista;
-		
-		
 	}
+	
 	public static List<String> leerArchivo(String path){
 		   File archivo = null;
 	       FileReader fr = null;
