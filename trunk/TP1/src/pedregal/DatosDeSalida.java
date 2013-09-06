@@ -20,12 +20,14 @@ public class DatosDeSalida {
 
 	public DatosDeSalida(List<String> archivoDeSalida) {
 		String sePuedeConstruirString = archivoDeSalida.get(0);
-		String coordenadaCasaString = archivoDeSalida.get(1);
-		String orientacion = archivoDeSalida.get(2);
-		
-		this.sePuedeConstruir = "SI".equals(sePuedeConstruirString);
-		this.posicionCasa = new Coordenada(coordenadaCasaString);
-		this.orientacion = orientacion;
+		if("SI".equals(sePuedeConstruirString)){
+			String coordenadaCasaString = archivoDeSalida.get(1);
+			String orientacion = archivoDeSalida.get(2);
+			
+			this.sePuedeConstruir = true;
+			this.posicionCasa = new Coordenada(coordenadaCasaString);
+			this.orientacion = orientacion;			
+		}
 	}
 
 	public boolean sePuedeConstruir() {
