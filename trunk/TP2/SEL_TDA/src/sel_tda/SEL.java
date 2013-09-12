@@ -113,7 +113,7 @@ public class SEL {
 	}
 	
 	public void resolverSEL() throws Exception {
-		this.x = m.inversa().multiplicar(this.b);
+//		this.x = m.inversa().multiplicar(this.b);
 		this.calcularErrorSolucion();
 	}
 	
@@ -138,13 +138,13 @@ public class SEL {
 		this.error = 0;
 		
 		MatrizMath m1 = new MatrizMath(dim, dim); // matriz inversa
-		m1 = m.inversa();
+//		m1 = m.inversa();
 		MatrizMath m2 = new MatrizMath(dim, dim); //matriz identidad 
 		m2.identidad();
 		MatrizMath m3 = new MatrizMath(dim, dim); //matriz identidad surgida de multiplicar la matriz por su inversa		
 		m3 = m.multiplicar(m1);
 		m2.restaMatrizMath(m3);   //resto I-I' y saco su normaDos
-		error += m2.normaDos();
+//		error += m2.normaDos();
 	}
 	
 	public static void main(String[] args) throws Exception {

@@ -156,7 +156,7 @@ public class VectorMath {
 	}
 	
 	public VectorMath multiplicar(MatrizMath m) throws Exception  {
-		if(m.getCol() != n)
+		if(m.getCantidadColumnas() != n)
 			throw new Exception("No se puede realizar el producto entre el vector y la matriz");
 		
 		VectorMath v1 = new VectorMath(n);
@@ -165,7 +165,7 @@ public class VectorMath {
 		for(int i = 0; i < n; i++) {
 			suma = 0;
 			
-			for(int j = 0; j < m.getFil(); j++) {
+			for(int j = 0; j < m.getCantidadFilas(); j++) {
 				suma += m.getValue(i,j) * v[i];  
 			}
 			v1.v[i] = suma;
