@@ -1,124 +1,111 @@
 package sel_tda;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
 
-public class MatrizMath {
+import utils.FileUtils;
 
-	private int fil, 
-				col;
-	private double mat[][];
+public class MatrizMath implements Cloneable{
+
+	private static final int CANTIDAD_FILAS_DEFAULT = 3;
+	
+	private static final int CANTIDAD_COLUMNAS_DEFAULT = 3;
+
+	private int cantidadFilas; 
+	
+	private int cantidadColumnas;
+	
+	private double matriz[][];
 	
 	
 	public MatrizMath() {
-		fil = 3;
-		col = 3;
-		mat = new double [fil][col];
-		
-		for(int i = 0; i < fil; i++)
-			for(int j = 0; j < col; j++)
-				mat[i][j] = 0;
-	}
-
-	public MatrizMath(int a, int b) {
-		fil = a;
-		col = b;
-
-		mat = new double[fil][col];
-		
-		for(int i = 0; i < fil; i++)
-			for(int j = 0; j < col; j++)
-				mat[i][j] = 0;
-	}	
-
-	public MatrizMath(String path) {  
-		File f = null;
-		FileReader fr = null;
-		BufferedReader br = null;
-
-		try {
-			f = new File(path);
-			fr = new FileReader(f);
-			br = new BufferedReader(fr);
-			String linea;
-			String[] datos;
-			
-			linea = br.readLine();
-			datos= linea.split(" ");
-			fil = Integer.parseInt(datos[0]);
-			col = Integer.parseInt(datos[1]);
-				
-			mat = new double [fil][col];
-			int i = 0;
-			
-			while((linea = br.readLine())!=null)
-			{
-				datos= linea.split(" ");
-				
-				for(int j = 0; j < col; j++)
-				mat[i][j] = Double.parseDouble(datos[j]);
-				i++;
-			}
-		
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (null != fr)
-					fr.close();
-			} catch (Exception e2) {
-				e2.printStackTrace();
-			}
-		}
-	}
-
-	public int getFil() {
-		return fil;
-	}
-
-	public void setFil(int fil) {
-		this.fil = fil;
-	}
-
-	public int getCol() {
-		return col;
-	}
-
-	public void setCol(int col) {
-		this.col = col;
-	}
-
-	public double[][] getMat() {
-		return mat;
-	}
-
-	public void setMat(double[][] mat) {
-		this.mat = mat;
-	}	
-	
-	public void setValue (int fil, int col, double x) throws Exception {
-		if(col >= this.col || fil >= this.fil)
-			throw new Exception("La columna o la fila elegida es mayor a la capacidad de la matriz");
-		else
-			mat[fil][col] = x;
+		this(CANTIDAD_FILAS_DEFAULT, CANTIDAD_COLUMNAS_DEFAULT);
 	}
 	
-	public double getValue(int fil, int col) throws Exception {
-		if(col >= this.col || fil >= this.fil)
-			throw new Exception("La columna o la fila elegida es mayor a la capacidad de la matriz");
-		else
-			return mat[fil][col];
+	public MatrizMath(MatrizMath matriz) {
+		this(matriz.cantidadFilas, matriz.cantidadColumnas);
+		this.matriz = matriz.matriz.clone();
+	}
+
+	public MatrizMath(int cantidadFilas, int cantidadColumnas) {
+		validarDimensionesNoNegativas(cantidadFilas, cantidadColumnas);
+		this.cantidadFilas = cantidadFilas;
+		this.cantidadColumnas = cantidadColumnas;
+		
+		inicializarMatriz();
+	}
+	
+	protected void inicializarMatriz(){
+		matriz = new double [this.cantidadFilas][this.cantidadColumnas];
+		for(int i = 0; i < this.cantidadFilas; i++)
+			for(int j = 0; j < this.cantidadColumnas; j++)
+				matriz[i][j] = 0;
+	}
+	
+
+	public MatrizMath(String path) {
+		this(InterpreteMatrizMathArchivo.interpretar(path));
+	}
+	
+	public int getCantidadFilas() {
+		return cantidadFilas;
+	}
+
+
+	public void setCantidadFilas(int cantidadFilas) {
+		this.cantidadFilas = cantidadFilas;
+	}
+
+
+	public int getCantidadColumnas() {
+		return cantidadColumnas;
+	}
+
+
+	public void setCantidadColumnas(int cantidadColumnas) {
+		this.cantidadColumnas = cantidadColumnas;
+	}
+
+
+	public double[][] getMatriz() {
+		return matriz;
+	}
+
+
+	public void setMatriz(double[][] matriz) {
+		this.matriz = matriz;
+	}
+
+
+	public void setValue (int fila, int columna, double valor) {
+		validarRango(fila,columna);
+		matriz[fila][columna] = valor;
+	}
+	
+	public double getValue(int fila, int columna) {
+		validarRango(fila, columna);
+		return matriz[fila][columna];
+	}
+	
+	private void validarDimensionesNoNegativas(int cantidadFilas,
+			int cantidadColumnas) {
+		if(cantidadFilas <= 0 || cantidadColumnas <=0)
+			throw new RuntimeException("La dimension de una matriz debe ser positiva.");
+	}
+	
+	protected void validarRango(int fila, int columna){
+		if(columna >= this.cantidadColumnas || fila >= this.cantidadFilas)
+			throw new RuntimeException("La columna o la fila elegida es mayor a la capacidad de la matriz");
 	}
 	
 	public String toString() {
 		String s = "";
 		
-		for(int i = 0; i < fil; i++)
+		for(int i = 0; i < cantidadFilas; i++)
 		{
-			for(int j = 0; j < col; j++)
-				s += mat[i][j] + "\t";
+			for(int j = 0; j < cantidadColumnas; j++)
+				s += matriz[i][j] + "\t";
 			s += "\n";
 		}
 		return s;
@@ -137,129 +124,101 @@ public class MatrizMath {
 		
 		MatrizMath other = (MatrizMath) obj;
 		
-		if (col != other.col)
+		if (cantidadColumnas != other.cantidadColumnas)
 			return false;
 		
-		if (fil != other.fil)
+		if (cantidadFilas != other.cantidadFilas)
 			return false;
 		
-		for (int i = 0; i < fil; i++) { // Para que compare todas las filas
-			if (!Arrays.equals(mat[i], other.mat[i]))
+		for (int i = 0; i < cantidadFilas; i++) { // Para que compare todas las filas
+			if (!Arrays.equals(matriz[i], other.matriz[i]))
 				return false;
 		}
 		return true;
 	}
 
-	public MatrizMath Clone(){
-		MatrizMath aux = new MatrizMath(fil,col);
-		
-		for(int i =0 ; i < fil; i++)
-			for (int j = 0; j < col; j++)
-				aux.mat[i][j] = mat[i][j];
-		
-		return aux;
+	public MatrizMath clone(){
+		return new MatrizMath(this);
 	}	
 	
-	public void sumaMatrizMath(MatrizMath obj) throws Exception {
-		if (this.fil != obj.fil || this.col != obj.col)
-			throw new Exception("Las matrices tienen distinta dimensión y no se pueden sumar.");
-		
-		for(int i = 0; i < fil; i++)
-			for(int j = 0; j < col; j++)
-				this.mat[i][j] += obj.mat[i][j];
+	public MatrizMath sumaMatrizMath(MatrizMath matriz) throws Exception {
+		return sumaMatrizMath(this, matriz);
 	}
 	
-	public static MatrizMath sumaMatrizMath(MatrizMath obj1, MatrizMath obj2) throws Exception {
-		if (obj1.fil != obj2.fil|| obj1.col != obj2.col)
+	public static MatrizMath sumaMatrizMath(MatrizMath matriz1, MatrizMath matriz2) throws Exception {
+		if (matriz1.cantidadFilas != matriz2.cantidadFilas|| matriz1.cantidadColumnas != matriz2.cantidadColumnas)
 			throw new Exception("Las matrices tienen distinta dimensión y no se pueden sumar.");
 		
-			MatrizMath resultado = new MatrizMath(obj1.fil, obj1.col);
+			MatrizMath resultado = new MatrizMath(matriz1.cantidadFilas, matriz1.cantidadColumnas);
 			
-			for(int i = 0; i < obj1.fil; i++)
-				for(int j = 0; j < obj1.col; j++)
-					resultado.mat[i][j] = obj1.mat[i][j]+obj2.mat[i][j];
+			for(int i = 0; i < matriz1.cantidadFilas; i++)
+				for(int j = 0; j < matriz1.cantidadColumnas; j++)
+					resultado.matriz[i][j] = matriz1.matriz[i][j]+matriz2.matriz[i][j];
 
 			return resultado;
 	}
 
-	public void restaMatrizMath(MatrizMath obj) throws Exception {
-		if (this.fil != obj.fil || this.col != obj.col)
-			throw new Exception("Las matrices tienen distinta dimensión y no se pueden restar.");
-		
-			for(int i = 0; i < fil; i++) {
-				for(int j = 0; j < col; j++)
-					this.mat[i][j]-=obj.mat[i][j];
-			
-			}
+	public MatrizMath restaMatrizMath(MatrizMath obj) throws Exception {
+		return restaMatrizMath(this, obj);
 	}
 		
 	public static MatrizMath restaMatrizMath(MatrizMath obj1, MatrizMath obj2) throws Exception {
-		if (obj1.fil != obj2.fil || obj1.col != obj2.col)
+		if (obj1.cantidadFilas != obj2.cantidadFilas || obj1.cantidadColumnas != obj2.cantidadColumnas)
 			throw new Exception("Las matrices tienen distinta dimensión y no se pueden restar.");
 		
-			MatrizMath resultado= new MatrizMath(obj1.fil, obj1.col);
+			MatrizMath resultado= new MatrizMath(obj1.cantidadFilas, obj1.cantidadColumnas);
 			
-			for(int i = 0; i < obj1.fil; i++)
-				for(int j = 0; j < obj1.col; j++)
-					resultado.mat[i][j] = obj1.mat[i][j]-obj2.mat[i][j];
+			for(int i = 0; i < obj1.cantidadFilas; i++)
+				for(int j = 0; j < obj1.cantidadColumnas; j++)
+					resultado.matriz[i][j] = obj1.matriz[i][j]-obj2.matriz[i][j];
 
 			return resultado;
 	}	
 		
 	public MatrizMath productoPorUnEscalar(double escalar) {
-		MatrizMath aux = new MatrizMath(this.fil, this.col);
+		MatrizMath aux = new MatrizMath(this.cantidadFilas, this.cantidadColumnas);
 
-		for (int i = 0; i < fil; i++)
-			for (int j = 0; j < col; j++)
-				aux.mat[i][j] = escalar * this.mat[i][j];
+		for (int i = 0; i < cantidadFilas; i++)
+			for (int j = 0; j < cantidadColumnas; j++)
+				aux.matriz[i][j] = escalar * this.matriz[i][j];
 
 		return aux;
 	}
 	
-	public MatrizMath multiplicar ( MatrizMath obj ) throws Exception {
-		if(col != obj.fil)
-			throw new Exception("Las matrices no pueden multiplicarse.");
-		
-		MatrizMath r = new MatrizMath(this.fil, obj.col);
-
-	        for(int i = 0; i < fil; i++)
-	            for (int j = 0; j < col; j++)
-	                for (int k = 0; k < col; k++)
-	                	r.mat[i][j] += this.mat[i][k] * obj.mat[k][j];
-
-			return r;
+	public MatrizMath multiplicar ( MatrizMath matriz ) throws Exception {
+		return multiplicar(this, matriz);
 	}
 
-	public static MatrizMath multiplicar (MatrizMath obj1, MatrizMath obj2 )throws Exception {
-		if(obj1.col != obj2.fil)
-			throw new Exception("Las matrices no pueden multiplicarse.");
+	public static MatrizMath multiplicar (MatrizMath matriz1, MatrizMath matriz2 ) {
+		if(matriz1.cantidadColumnas != matriz2.cantidadFilas)
+			throw new RuntimeException("Las matrices no pueden multiplicarse.");
 		
-		MatrizMath r = new MatrizMath(obj1.fil, obj2.col);
+		MatrizMath r = new MatrizMath(matriz1.cantidadFilas, matriz2.cantidadColumnas);
 
-	        for(int i = 0; i < obj1.fil; i++)
-	            for (int j = 0; j < obj1.col; j++)
-	                for (int k = 0; k < obj1.col; k++)
-	                    r.mat[i][j] += obj1.mat[i][k] * obj2.mat[k][j];
+	        for(int i = 0; i < matriz1.cantidadFilas; i++)
+	            for (int j = 0; j < matriz1.cantidadColumnas; j++)
+	                for (int k = 0; k < matriz1.cantidadColumnas; k++)
+	                    r.matriz[i][j] += matriz1.matriz[i][k] * matriz2.matriz[k][j];
 
 			return r;
 	}	
 	
 	public VectorMath multiplicar (VectorMath v) throws Exception  {
-		if(col != v.getLongitud())
+		if(cantidadColumnas != v.getLongitud())
 			throw new Exception("No se puede realizar la multiplicación entre la matriz y el vector");
 		
-		VectorMath v1 = new VectorMath(fil);
+		VectorMath v1 = new VectorMath(cantidadFilas);
 		double suma = 0;
 		int cont = 0;
 		
-		for(int i = 0; i < fil; i++)	
+		for(int i = 0; i < cantidadFilas; i++)	
 		{	
 			suma = 0;
 			cont = 0;
 				
-			while (cont<this.col)
+			while (cont<this.cantidadColumnas)
 			{
-				suma+=this.mat[i][cont]*v.getValue(cont);
+				suma+=this.matriz[i][cont]*v.getValue(cont);
 				cont++;
 			}
 			v1.setValue(i,suma);
@@ -267,68 +226,19 @@ public class MatrizMath {
 		return v1;
 	}
 	
-	public double normaUno() throws Exception {
-		if (this.fil != this.col)
-			throw new Exception("No se puede calcular la Norma Uno de la matriz.");
-
-		double aux;
-		VectorMath vec = new VectorMath(this.col);
-
-		for (int j = 0; j < this.col; j++) {
-			aux = 0;
-			for (int i = 0; i < this.fil; i++)
-				aux += Math.abs(this.mat[i][j]);
-			vec.setValue(j,aux);
-		}
-		return vec.normaInfinito();
-	}
-	
-	public double normaDos() throws Exception {
-		if (this.fil != this.col)
-			throw new Exception("No se puede calcular la Norma Dos de la matriz.");
-
-		double aux = 0;
-
-		for (int i = 0; i < this.fil; i++)
-			for (int j = 0; j < this.col; j++)
-				aux += Math.pow(Math.abs(mat[i][j]), 2);
-
-		return Math.sqrt(aux);
-	}
-
-	public double normaInfinito() throws Exception {
-		if (this.fil != this.col)
-			throw new Exception("No se puede calcular la Norma Infinito de la matriz.");
-
-		double aux;
-		VectorMath vec = new VectorMath(this.col);
-
-		for (int i = 0; i < fil; i++) {
-			aux = 0;
-			for (int j = 0; j < col; j++)
-				aux += Math.abs(this.mat[i][j]);
-			vec.setValue(i, aux);
-		}
-		return vec.normaInfinito();
-	}
-
 	public double determinante () throws Exception {
-		
-		if (this.fil != this.col)
-			throw new Exception ("No se puede calcular el determinante de la matriz.");
-		
-		if(this.fil == 1)
-			return mat[0][0];
+		if(this.getCantidadFilas() == 1)
+			return matriz[0][0];
 		
 		double result = 0;
 		
-		if (this.fil == 2)
-			result= mat[0][0] * mat[1][1] - mat[0][1] * mat[1][0];
+		if (this.getCantidadFilas() == 2)
+			result= matriz[0][0] * matriz[1][1] - matriz[0][1] * matriz[1][0];
 		else {	  
-			for (int i = 0; i < fil; i++) {
-				MatrizMath submatriz = new MatrizMath(this.fil -1, this.col -1);
+			for (int i = 0; i < this.getCantidadFilas(); i++) {
+				MatrizMath submatriz = new MatrizMath(this.cantidadFilas -1, this.getCantidadColumnas() -1);
 				submatriz = subMatriz(this, i, 0); // Elimino fila i y col 0
-				result += Math.pow(-1,i) * mat[i][0] * submatriz.determinante();
+				result += Math.pow(-1,i) * matriz[i][0] * submatriz.determinante();
 			}
 		}
 	return result;
@@ -336,16 +246,16 @@ public class MatrizMath {
 	
 	private MatrizMath subMatriz(MatrizMath obj, int fil, int col) {
 		
-		MatrizMath matriz = new MatrizMath((obj.fil - 1), (obj.col - 1));
+		MatrizMath matriz = new MatrizMath((obj.cantidadFilas - 1), (obj.cantidadColumnas - 1));
 		int posfil = 0;
 		int poscol = 0;
 
-		for (int i = 0; i < obj.fil; i++) {
+		for (int i = 0; i < obj.cantidadFilas; i++) {
 			poscol = 0;
 			if (i != fil) { // Saco la fila x
-				for (int j = 0; j < obj.col; j++) {// Saco la columna 0
+				for (int j = 0; j < obj.cantidadColumnas; j++) {// Saco la columna 0
 					if (j != col) {
-						matriz.mat[posfil][poscol] = obj.mat[i][j];
+						matriz.matriz[posfil][poscol] = obj.matriz[i][j];
 						poscol++;
 					}
 				}
@@ -358,60 +268,11 @@ public class MatrizMath {
 	public void identidad() {
 		int i;
 		
-		for(i = 0; i < fil; i++)
-			mat[i][i] = 1;
+		for(i = 0; i < cantidadFilas; i++)
+			matriz[i][i] = 1;
 	}
 	
-	public MatrizMath inversa() {
-		MatrizMath Ainv = new MatrizMath(this.col, this.fil);
-		Ainv = this.Clone();
-		
-        int n = col;
-        int k, 
-        	j, 
-        	i;
 
-        for (i = 0; i < n; i++)
-            for (j = 0; j < n; j++)
-                Ainv.mat[i][j] = mat[i][j];
-
-        for (k = 0; k < n; k++) {
-            for (i = 0; i < n; i++) {
-                for (j = 0; j < n; j++) {
-                    if ((i != k) && (j != k))
-                        Ainv.mat[i][j] -= (Ainv.mat[i][k] * Ainv.mat[k][j]) / Ainv.mat[k][k];
-                }
-
-           		for (j = 0; j < n; j++) {
-           			if (j != k)
-           				Ainv.mat[k][j] = -Ainv.mat[k][j] / Ainv.mat[k][k];
-           		}
-
-	            for (i = 0; i < n; i++) {
-	                if (i != k)
-	                    Ainv.mat[i][k] = Ainv.mat[i][k] / Ainv.mat[k][k];
-	            }
-	        Ainv.mat[k][k] = 1 / Ainv.mat[k][k];
-            }
-        }
-    return Ainv;
-  }
-
-	public double errorCometido() throws Exception {
-		if(this.col != this.fil)
-			throw new Exception("La matriz no es cuadrada.");
-		
-		double error = 0;
-		
-		MatrizMath m= new MatrizMath(fil, col); //matriz identidad 
-		m.identidad();
-		
-		m.restaMatrizMath(this.multiplicar(this.inversa()));   //resto I-I' y saco su normaDos
-		error += m.normaDos();
-		
-		return error;
-	}
-	
 	public static void main(String[] args) throws Exception {
 
 		
@@ -421,8 +282,8 @@ public class MatrizMath {
 		m.setValue(1,0,5);
 		m.setValue(1,1,3);
 		System.out.println(m);
-		System.out.println(m.inversa());
-		System.out.println(m.errorCometido());
+//		System.out.println(m.inversa());
+//		System.out.println(m.errorCometido());
 		
 		MatrizMath m2 = new MatrizMath(4,4);
 
@@ -444,8 +305,8 @@ public class MatrizMath {
 		m2.setValue(3,2,1);
 		m2.setValue(3,3,2);
 		System.out.println(m2);
-		System.out.println(m2.inversa());
+//		System.out.println(m2.inversa());
 		System.out.println(m2.determinante());
-		System.out.println(m2.errorCometido());
+//		System.out.println(m2.errorCometido());
 	}
 }
