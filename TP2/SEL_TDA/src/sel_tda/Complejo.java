@@ -103,15 +103,7 @@ public class Complejo implements Comparable<Complejo> {
 		
 		// Prueba equals		
 		boolean sonIguales = sumaEsperada.equals(sumar);
-//		System.gc();
-		System.out.println("Son iguales: " + sonIguales);
-		String a = "a";
-		String a1 = new String(a);
-		String a2 = new String(a);
-		boolean sonIgualeString = a1 == a2;
-		
-		System.out.println("Son iguales String: " + sonIgualeString);
-		
+
 		Comparable c = new Complejo();
 		String s ="";
 		c.compareTo(c);
@@ -141,10 +133,5 @@ public class Complejo implements Comparable<Complejo> {
 		else
 			return 0;
 	}
-	
-	public interface Interfaz{
-		int compareTo(Object arg0);
-	}
-
 
 }
