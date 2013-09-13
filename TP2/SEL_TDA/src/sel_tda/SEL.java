@@ -4,6 +4,7 @@ import java.io.*;
 public class SEL {
 
 	private MatrizMath m;
+	private MatrizMathCuadrada mc;
 	private VectorMath b;
 	private VectorMath x;
 	private double error;
@@ -113,7 +114,7 @@ public class SEL {
 	}
 	
 	public void resolverSEL() throws Exception {
-//		this.x = m.inversa().multiplicar(this.b);
+	//	this.x = mc.inversa().multiplicar(this.b);
 		this.calcularErrorSolucion();
 	}
 	
@@ -148,7 +149,7 @@ public class SEL {
 	}
 	
 	public static void main(String[] args) throws Exception {
-	/*	
+		
 		double inicio, fin;
 		String nombre = "2x2.in";
 		
@@ -175,7 +176,7 @@ public class SEL {
 		fin = System.currentTimeMillis();
 		System.out.println(nombre + ": " + (fin - inicio) + " ms");
 		
-		nombre = "10x10.in";
+	/*	nombre = "10x10.in";
 		inicio = System.currentTimeMillis();
 		SEL d=new SEL(nombre);
 		d.resolverSEL();
