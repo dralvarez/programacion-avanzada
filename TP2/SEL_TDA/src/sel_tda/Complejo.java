@@ -29,6 +29,7 @@ public class Complejo implements Comparable<Complejo> {
 	}
 	
 	public Complejo sumar(Double real){
+		return new Complejo(this.parteReal + real, this.parteCompleja);
 	}
 	
 	public Complejo multiplicar(Complejo complejo){
@@ -39,11 +40,10 @@ public class Complejo implements Comparable<Complejo> {
 	}
 	
 	public Complejo multiplicar(Double real){
-		
+		return new Complejo(this.parteReal * real, this.parteCompleja * real);
 	}
 	
-	
-	
+		
 	
 	public Complejo dividir(Double divisor){
 		double parteReal = this.parteReal / divisor;
@@ -114,7 +114,7 @@ public class Complejo implements Comparable<Complejo> {
 		
 		Comparable c = new Complejo();
 		String s ="";
-		c.compareTo(s);
+		c.compareTo(c);
 		// Prueba division
 		
 		double divisor = 2;

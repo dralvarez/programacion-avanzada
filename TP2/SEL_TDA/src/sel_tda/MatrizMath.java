@@ -282,31 +282,33 @@ public class MatrizMath implements Cloneable{
 		m.setValue(1,0,5);
 		m.setValue(1,1,3);
 		System.out.println(m);
-//		System.out.println(m.inversa());
-//		System.out.println(m.errorCometido());
-		
-		MatrizMath m2 = new MatrizMath(4,4);
-
-		
+				
+		MatrizMath m2 = new MatrizMath(2,2);
 		m2.setValue(0,0,1);
-		m2.setValue(0,1,0);
-		m2.setValue(0,2,2);
-		m2.setValue(0,3,1);
-		m2.setValue(1,0,0);
-		m2.setValue(1,1,3);
-		m2.setValue(1,2,1);
-		m2.setValue(1,3,2);
-		m2.setValue(2,0,1);
-		m2.setValue(2,1,0);
-		m2.setValue(2,2,1);
-		m2.setValue(2,3,4);
-		m2.setValue(3,0,0);
-		m2.setValue(3,1,1);
-		m2.setValue(3,2,1);
-		m2.setValue(3,3,2);
+		m2.setValue(0,1,1);
+		m2.setValue(1,0,1);
+		m2.setValue(1,1,1);
 		System.out.println(m2);
-//		System.out.println(m2.inversa());
-		System.out.println(m2.determinante());
-//		System.out.println(m2.errorCometido());
+		
+		MatrizMath suma = new MatrizMath(2,2);
+		suma.inicializarMatriz();
+		suma = m2.sumaMatrizMath(m);
+		System.out.println("suma: " + suma);
+
+		MatrizMath resta = new MatrizMath(2,2);
+		resta.inicializarMatriz();
+		resta = m2.restaMatrizMath(m);
+		System.out.println("resta: " + resta);
+		
+		MatrizMath producto_escalar = new MatrizMath(2,2);
+		producto_escalar.inicializarMatriz();
+		producto_escalar = m2.productoPorUnEscalar(2);
+		System.out.println("producto escalar: " + producto_escalar);		
+
+		MatrizMath identidad = new MatrizMath(2,2);
+		identidad.inicializarMatriz();
+		identidad.identidad();
+		System.out.println("identidad: " + identidad);		
+		
 	}
 }
