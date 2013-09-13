@@ -7,14 +7,14 @@ public class SEL {
 	private VectorMath b;
 	private VectorMath x;
 	private double error;
-	private int dim;
+	private int dimension;
 	
 	
-	public SEL (int d) {
-		dim = d;
-		m = new MatrizMath(d,d);
-		b = new VectorMath(d);
-		x = new VectorMath(d);
+	public SEL (int dimension) {
+		this.dimension = dimension;
+		m = new MatrizMath(dimension,dimension);
+		b = new VectorMath(dimension);
+		x = new VectorMath(dimension);
 		
 	}
 		
@@ -33,25 +33,25 @@ public class SEL {
 			
 			if(linea != null)
 			{
-				dim = Integer.parseInt(linea);
+				dimension = Integer.parseInt(linea);
 				
-				if(dim < 2) {
+				if(dimension < 2) {
 					System.out.println("El tamaño del SEL es inferior a 2");
 					System.exit(1);
 				}
-				m = new MatrizMath(dim, dim);
+				m = new MatrizMath(dimension, dimension);
 				
 				int tope_mat = 0;
 					
-				while((linea = br.readLine()) != null && tope_mat < dim * dim)
+				while((linea = br.readLine()) != null && tope_mat < dimension * dimension)
 				{
 					String[] datos=linea.split(" ");
 					m.setValue(Integer.parseInt(datos[0]), Integer.parseInt(datos[1]), Double.parseDouble(datos[2]));
 					tope_mat++;
 				}
 							 
-				b = new VectorMath(dim);
-				x = new VectorMath(dim);	
+				b = new VectorMath(dimension);
+				x = new VectorMath(dimension);	
 				
 				b.setValue(0, Double.parseDouble(linea));
 				int j = 1;
@@ -97,11 +97,11 @@ public class SEL {
 	}
 
 	public int getDim() {
-		return dim;
+		return dimension;
 	}
 
 	public void setDim(int dim) {
-		this.dim = dim;
+		this.dimension = dim;
 	}
 	
 	public void mostrarResultado(){
@@ -137,11 +137,11 @@ public class SEL {
 	private void ErrorSolucion() throws Exception {
 		this.error = 0;
 		
-		MatrizMath m1 = new MatrizMath(dim, dim); // matriz inversa
+		MatrizMath m1 = new MatrizMath(dimension, dimension); // matriz inversa
 //		m1 = m.inversa();
-		MatrizMath m2 = new MatrizMath(dim, dim); //matriz identidad 
+		MatrizMath m2 = new MatrizMath(dimension, dimension); //matriz identidad 
 		m2.identidad();
-		MatrizMath m3 = new MatrizMath(dim, dim); //matriz identidad surgida de multiplicar la matriz por su inversa		
+		MatrizMath m3 = new MatrizMath(dimension, dimension); //matriz identidad surgida de multiplicar la matriz por su inversa		
 		m3 = m.multiplicar(m1);
 		m2.restaMatrizMath(m3);   //resto I-I' y saco su normaDos
 //		error += m2.normaDos();
