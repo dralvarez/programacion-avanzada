@@ -4,81 +4,63 @@ import java.io.*;
 import java.util.Arrays;
 
 public class VectorMath {
-	private int n; //n = cantidad de elementos
-	private double[] v;
+	private int cantidadElementos; //n = cantidad de elementos
+	private double[] vector;
 
 
 	public VectorMath() {
-		this.n = 0;
-		this.v = new double[n];
+		this(0);
 	}
 	
-	public VectorMath(int n) {
-		this.n = n;
-		this.v = new double[n];
-		
-		for(int i = 0; i < n; i++)
-			this.v[i] = 0;
-	}
-
-	public VectorMath(String s) {
-		
-		File f = null;
-		FileReader fr = null;
-		BufferedReader br = null;
-
-		try {
-			f = new File(s);
-			fr = new FileReader(f);
-			br = new BufferedReader(fr);
-			String linea;
-
-			if ((linea = br.readLine()) != null)
-				n = Integer.parseInt(linea);
-
-			if (n > 0) {
-				v = new double[n];
-
-				for (int i = 0; i < n; i++) {
-					if ((linea = br.readLine()) != null)
-						v[i] = Integer.parseInt(linea);				
-				}
-			}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (null != fr)
-					fr.close();
-			} catch (Exception e2) {
-				e2.printStackTrace();
-			}
-		}
-	}
-
-	public int getLongitud() {
-		return n;
-	}
-
-	public void setLongitud(int n) {
-		this.n = n;
+	public VectorMath(int cantidadDeElementos) {
+		this.cantidadElementos = cantidadDeElementos;
+		inicializarVector();
 	}
 	
-	public double getValue(int pos) throws Exception {
-		
-		if (pos >= this.getLongitud())
-			throw new Exception("No existe la posición " + pos + " en el vector.");
-		else
-			return v[pos];
+	public VectorMath(VectorMath vector) {
+		this.cantidadElementos = vector.cantidadElementos;
+		this.vector = vector.vector.clone();
 	}
 	
-	public void setValue(int pos, double valor) throws Exception {
-		
-		if (pos >= this.getLongitud())
-			throw new Exception("No existe la posición " + pos + " en el vector.");
-		else
-			this.v[pos]=valor;
+	public void inicializarVector(){
+		this.vector = new double[cantidadElementos];
+		for(int i = 0; i < cantidadElementos; i++)
+			this.vector[i] = 0;
+	}
+
+	public VectorMath(String path) {
+		this(InterpreteVectorMathArchivo.interpretar(path));
+	}
+	
+	public int getCantidadElementos() {
+		return cantidadElementos;
+	}
+
+	public void setCantidadElementos(int cantidadElementos) {
+		this.cantidadElementos = cantidadElementos;
+	}
+
+	public double[] getVector() {
+		return vector;
+	}
+
+	public void setVector(double[] vector) {
+		this.vector = vector;
+	}
+
+	public double getValue(int posicion){
+		validarPosicion(posicion);
+		return vector[posicion];
+	}
+	
+	private void validarPosicion(int posicion) {
+		if (posicion >= this.getCantidadElementos())
+			throw new RuntimeException("No existe la posición " + posicion + " en el vector.");
+	}
+
+	public void setValue(int posicion, double valor) throws Exception {
+		validarPosicion(posicion);
+		this.vector[posicion]=valor;
 	}
 		
 	@Override
@@ -95,80 +77,80 @@ public class VectorMath {
 		
 		VectorMath other = (VectorMath) obj;
 		
-		if (n != other.n)
+		if (cantidadElementos != other.cantidadElementos)
 			return false;
 		
-		if (!Arrays.equals(v, other.v))
+		if (!Arrays.equals(vector, other.vector))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return Arrays.toString(v);
+		return Arrays.toString(vector);
 	}
 
-	public VectorMath sumar(VectorMath v2) throws Exception{
+	public VectorMath sumar(VectorMath v2){
+		validarLongitudesIguales(this,v2, TipoOperacion.SUMA);
 		
-		if(n != v2.n)
-			throw new Exception ("Las longitudes de los vectores son diferentes, no se pueden sumar.");
+		VectorMath v1 = new VectorMath(cantidadElementos);
 
-		VectorMath v1 = new VectorMath(n);
-
-		for (int i = 0; i < n; i++) {
-			v1.v[i] = v[i] + v2.v[i];
+		for (int i = 0; i < cantidadElementos; i++) {
+			v1.vector[i] = vector[i] + v2.vector[i];
 		}
 		return v1;
 	}
 
+	private void validarLongitudesIguales(VectorMath vectorMath, VectorMath v2, TipoOperacion tipoOperacion) {
+		if(cantidadElementos != v2.cantidadElementos)
+			throw new RuntimeException ("Las longitudes de los vectores son diferentes, no se puede efectuar la operacion " + tipoOperacion);
+	}
+
 	public VectorMath restar(VectorMath v2) throws Exception{
-		
-		if(n != v2.n)
-			throw new Exception ("Las longitudes de los vectores son diferentes, no se pueden restar.");
+		validarLongitudesIguales(this,v2, TipoOperacion.RESTA);
 
-		VectorMath v1 = new VectorMath(n);
+		VectorMath v1 = new VectorMath(cantidadElementos);
 
-		for (int i = 0; i < n; i++) {
-			v1.v[i] = v[i] - v2.v[i];
+		for (int i = 0; i < cantidadElementos; i++) {
+			v1.vector[i] = vector[i] - v2.vector[i];
 		}
 		return v1;
 	}
 	
 	public VectorMath multiplicarPorUnEscalar(double r) {
-		VectorMath v1 = new VectorMath(n);
+		VectorMath v1 = new VectorMath(cantidadElementos);
 
-		for (int i = 0; i < n; i++) {
-			v1.v[i] = v[i] * r;
+		for (int i = 0; i < cantidadElementos; i++) {
+			v1.vector[i] = vector[i] * r;
 		}
 		return v1;
 	}
 		
 	public double productoEscalar(VectorMath v2) throws Exception{
-		if(this.getLongitud()!=v2.getLongitud())
-			throw new Exception ("Las longitudes de los vectores son diferentes, no se pueden multiplicar.");
+		validarLongitudesIguales(this,v2, TipoOperacion.PRODUCTO_ESCALAR);
 		
 		double r = 0;
 
-		for (int i = 0; i < this.n; i++) 
-			r += this.v[i] * v2.v[i];
+		for (int i = 0; i < this.cantidadElementos; i++) 
+			r += this.vector[i] * v2.vector[i];
 
 		return r;
 	}
 	
 	public VectorMath multiplicar(MatrizMath m) throws Exception  {
-		if(m.getCantidadColumnas() != n)
+		if(m.getCantidadColumnas() != cantidadElementos)
 			throw new Exception("No se puede realizar el producto entre el vector y la matriz");
 		
-		VectorMath v1 = new VectorMath(n);
+		VectorMath v1 = new VectorMath(cantidadElementos);
 		double suma;
 		
-		for(int i = 0; i < n; i++) {
+		for(int i = 0; i < cantidadElementos; i++) {
 			suma = 0;
 			
 			for(int j = 0; j < m.getCantidadFilas(); j++) {
-				suma += m.getValue(i,j) * v[i];  
+				suma += m.getValue(i,j) * vector[i];  
 			}
-			v1.v[i] = suma;
+			v1.vector[i] = suma;
 		}
 		return v1;
 	}
@@ -176,8 +158,8 @@ public class VectorMath {
 	public double normaUno() {
 		double r = 0;
 		
-		for(int i = 0; i < n; i++) {
-			r += Math.abs(v[i]);
+		for(int i = 0; i < cantidadElementos; i++) {
+			r += Math.abs(vector[i]);
 		}
 		return r;
 	}
@@ -185,8 +167,8 @@ public class VectorMath {
 	public double normaDos() {
 		double r = 0;
 		
-		for(int i = 0; i < n; i++) {
-			r += Math.pow(Math.abs(v[i]), 2);
+		for(int i = 0; i < cantidadElementos; i++) {
+			r += Math.pow(Math.abs(vector[i]), 2);
 		}
 		return Math.sqrt(r);
 	}
@@ -194,9 +176,9 @@ public class VectorMath {
 	public double normaInfinito() {
 		double max = 0;
 		
-		for(int i = 0; i < n; i++) {
-			if(max < Math.abs(v[i]))
-				max = Math.abs(v[i]);
+		for(int i = 0; i < cantidadElementos; i++) {
+			if(max < Math.abs(vector[i]))
+				max = Math.abs(vector[i]);
 		}
 		return max;
 	}

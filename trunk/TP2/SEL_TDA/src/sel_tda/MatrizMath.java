@@ -204,7 +204,7 @@ public class MatrizMath implements Cloneable{
 	}	
 	
 	public VectorMath multiplicar (VectorMath v) throws Exception  {
-		if(cantidadColumnas != v.getLongitud())
+		if(cantidadColumnas != v.getCantidadElementos())
 			throw new Exception("No se puede realizar la multiplicación entre la matriz y el vector");
 		
 		VectorMath v1 = new VectorMath(cantidadFilas);
