@@ -159,7 +159,7 @@ public class SEL {
 		a.mostrarResultado();
 		fin = System.currentTimeMillis();
 		System.out.println(nombre + ": " + (fin - inicio) + " ms");
-		
+	/*	
 		nombre = "3x3.in";
 		inicio = System.currentTimeMillis();
 		SEL b=new SEL(nombre);
@@ -176,7 +176,7 @@ public class SEL {
 		fin = System.currentTimeMillis();
 		System.out.println(nombre + ": " + (fin - inicio) + " ms");
 		
-	/*	nombre = "10x10.in";
+		nombre = "10x10.in";
 		inicio = System.currentTimeMillis();
 		SEL d=new SEL(nombre);
 		d.resolverSEL();
