@@ -1,6 +1,5 @@
 package sel_tda;
 
-import java.io.*;
 import java.util.Arrays;
 
 public class VectorMath {
@@ -9,7 +8,7 @@ public class VectorMath {
 
 
 	public VectorMath() {
-		this(0);
+		this(1);
 	}
 	
 	public VectorMath(int cantidadDeElementos) {
