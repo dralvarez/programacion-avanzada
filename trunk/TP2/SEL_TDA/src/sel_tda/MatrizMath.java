@@ -43,7 +43,6 @@ public class MatrizMath implements Cloneable{
 				matriz[i][j] = 0;
 	}
 	
-
 	public MatrizMath(String path) {
 		this(InterpreteMatrizMathArchivo.interpretar(path));
 	}
@@ -52,31 +51,25 @@ public class MatrizMath implements Cloneable{
 		return cantidadFilas;
 	}
 
-
 	public void setCantidadFilas(int cantidadFilas) {
 		this.cantidadFilas = cantidadFilas;
 	}
-
 
 	public int getCantidadColumnas() {
 		return cantidadColumnas;
 	}
 
-
 	public void setCantidadColumnas(int cantidadColumnas) {
 		this.cantidadColumnas = cantidadColumnas;
 	}
-
 
 	public double[][] getMatriz() {
 		return matriz;
 	}
 
-
 	public void setMatriz(double[][] matriz) {
 		this.matriz = matriz;
 	}
-
 
 	public void setValue (int fila, int columna, double valor) {
 		validarRango(fila,columna);
@@ -88,8 +81,7 @@ public class MatrizMath implements Cloneable{
 		return matriz[fila][columna];
 	}
 	
-	private void validarDimensionesNoNegativas(int cantidadFilas,
-			int cantidadColumnas) {
+	private void validarDimensionesNoNegativas(int cantidadFilas, int cantidadColumnas) {
 		if(cantidadFilas <= 0 || cantidadColumnas <=0)
 			throw new RuntimeException("La dimension de una matriz debe ser positiva.");
 	}
@@ -175,7 +167,7 @@ public class MatrizMath implements Cloneable{
 			return resultado;
 	}	
 		
-	public MatrizMath productoPorUnEscalar(double escalar) {
+	public MatrizMath multiplicar(double escalar) {
 		MatrizMath aux = new MatrizMath(this.cantidadFilas, this.cantidadColumnas);
 
 		for (int i = 0; i < cantidadFilas; i++)
@@ -226,7 +218,7 @@ public class MatrizMath implements Cloneable{
 		return v1;
 	}
 	
-	public double determinante () throws Exception {
+	public double determinante () {
 		if(this.getCantidadFilas() == 1)
 			return matriz[0][0];
 		
@@ -274,8 +266,7 @@ public class MatrizMath implements Cloneable{
 	
 
 	public static void main(String[] args) throws Exception {
-
-		
+/*
 		MatrizMath m = new MatrizMath(2,2);
 		m.setValue(0,0,2);
 		m.setValue(0,1,1);
@@ -300,15 +291,58 @@ public class MatrizMath implements Cloneable{
 		resta = m2.restaMatrizMath(m);
 		System.out.println("resta: " + resta);
 		
-		MatrizMath producto_escalar = new MatrizMath(2,2);
-		producto_escalar.inicializarMatriz();
-		producto_escalar = m2.productoPorUnEscalar(2);
-		System.out.println("producto escalar: " + producto_escalar);		
-
 		MatrizMath identidad = new MatrizMath(2,2);
 		identidad.inicializarMatriz();
 		identidad.identidad();
-		System.out.println("identidad: " + identidad);		
+		System.out.println("identidad: " + identidad);	
 		
+		MatrizMath producto_escalar = new MatrizMath(2,2);
+		producto_escalar.inicializarMatriz();
+		producto_escalar = m2.multiplicar(2);
+		System.out.println("producto escalar: " + producto_escalar);
+		
+		MatrizMath m3 = new MatrizMath(2,2);
+		MatrizMath producto_matricial = new MatrizMath(2,2);
+		producto_matricial.inicializarMatriz();
+		producto_matricial = m2.multiplicar(identidad);
+		System.out.println("producto matricial: " + producto_matricial);
+		producto_matricial = m2.multiplicar(m3);
+		System.out.println("producto matricial: " + producto_matricial);
+
+		MatrizMath producto_matricial_2 = new MatrizMath(2,2);
+		producto_matricial_2 = multiplicar(m2,identidad);
+		System.out.println("producto matricial: " + producto_matricial_2);
+		
+		VectorMath vector = new VectorMath(m2.cantidadFilas);
+		vector.setValue(0, 2);
+		vector.setValue(1, 2);
+		VectorMath producto_matriz_por_vector = new VectorMath();
+		producto_matriz_por_vector = m2.multiplicar(vector);
+		System.out.println("producto de un vector por una matriz: " + producto_matriz_por_vector);
+		
+		double determinante = m.determinante();
+		System.out.println("determinante: " + determinante);
+		
+		MatrizMath m4 = new MatrizMath(4,4);
+		m4.setValue(0,0,1);
+		m4.setValue(0,1,2);
+		m4.setValue(0,2,3);
+		m4.setValue(0,3,4);
+		m4.setValue(1,0,2);
+		m4.setValue(1,1,1);
+		m4.setValue(1,2,5);
+		m4.setValue(1,3,3);
+		m4.setValue(2,0,6);
+		m4.setValue(2,1,8);
+		m4.setValue(2,2,9);
+		m4.setValue(2,3,2);
+		m4.setValue(3,0,3);
+		m4.setValue(3,1,3);
+		m4.setValue(3,2,3);
+		m4.setValue(3,3,3);
+		
+		double determinante_2 = m4.determinante();
+		System.out.println("determinante: " + determinante_2);
+*/		
 	}
 }
