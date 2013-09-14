@@ -7,9 +7,7 @@ import java.io.PrintWriter;
 public class Generador {
 
 	public static void main(String[] args) {
-		// Se genera la dimensión aleatoriamente con un valor entre 2 y 4
-		//(int)generarNumeroAleatorio(2,5);
-		
+	
 		int n = 4; //dimensión
 		FileWriter fichero = null;
         PrintWriter pw = null;
@@ -43,6 +41,6 @@ public class Generador {
 	}
 	
 	public static double generarNumeroAleatorio (double minimo, double maximo){
-		return Math.random()*(maximo-minimo)+minimo;
+		return Math.random() * (maximo - minimo) + minimo;
 	}
 }
