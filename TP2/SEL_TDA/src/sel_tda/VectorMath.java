@@ -57,7 +57,7 @@ public class VectorMath {
 			throw new RuntimeException("No existe la posición " + posicion + " en el vector.");
 	}
 
-	public void setValue(int posicion, double valor) throws Exception {
+	public void setValue(int posicion, double valor) {
 		validarPosicion(posicion);
 		this.vector[posicion]=valor;
 	}
