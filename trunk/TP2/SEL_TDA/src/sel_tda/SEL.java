@@ -3,6 +3,7 @@ import java.io.*;
 
 public class SEL {
 
+	private static final double ERROR_ACEPTABLE = Math.exp(-12);
 	private MatrizMath m;
 	private MatrizMathCuadrada mc;
 	private VectorMath b;
@@ -129,7 +130,7 @@ public class SEL {
 	public  boolean test() throws Exception{  // probador de matriz inversa, A*A-1= I  &&   ||I-I'||2 = error
 		this.ErrorSolucion();
 
-		if(error<Math.exp(-12))		// si el error es menor a e a la -12, entonces es un buen error
+		if(error<ERROR_ACEPTABLE)		// si el error es menor a e a la -12, entonces es un buen error
 			return true;
 		else
 			return false;
