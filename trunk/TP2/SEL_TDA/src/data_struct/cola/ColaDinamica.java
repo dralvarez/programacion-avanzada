@@ -1,13 +1,12 @@
 package data_struct.cola;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedList;
 
 public class ColaDinamica<T> implements Cola<T> {
 
-	private List<T> lista = new ArrayList<T>();
+	private LinkedList<T> lista = new LinkedList<T>();
 
-	public ColaDinamica(List<T> lista) {
+	public ColaDinamica(LinkedList<T> lista) {
 		this.lista = lista;
 	}
 	
@@ -18,20 +17,17 @@ public class ColaDinamica<T> implements Cola<T> {
 
 	@Override
 	public void offer(T element) {
-		// TODO Auto-generated method stub
-
+		lista.addFirst(element);
 	}
 
 	@Override
 	public T poll() {
-		// TODO Auto-generated method stub
-		return null;
+		return lista.removeFirst();
 	}
 
 	@Override
 	public T peek() {
-		// TODO Auto-generated method stub
-		return null;
+		return lista.getFirst();
 	}
 
 	@Override
