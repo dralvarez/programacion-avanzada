@@ -111,9 +111,13 @@ public class ColaEstatica<T> implements Cola<T> {
 		Cola<Integer> colaOffer = new ColaEstatica<Integer>();
 		colaOffer.offer(2);
 		colaOffer.offer(3);
+		colaOffer.offer(8);
 		System.out.println(colaOffer);
-		System.out.println(colaOffer.poll());
-		System.out.println(colaOffer.poll());
+		System.out.println("poll: " + colaOffer.poll());
+		System.out.println(colaOffer);
+		System.out.println("peek: " + colaOffer.peek());
+		colaOffer.vaciar();
+		System.out.println(colaOffer);
 	}
 
 }
