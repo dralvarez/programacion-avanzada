@@ -27,7 +27,7 @@ public class ColaEstatica<T> implements Cola<T> {
 		this.cabeza = 0;
 		this.cola = 0;
 	}
-
+	
 	@Override
 	public boolean isEmpty() {
 		boolean isEmpty = true;
