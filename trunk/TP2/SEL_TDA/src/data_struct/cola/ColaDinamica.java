@@ -1,11 +1,19 @@
 package data_struct.cola;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ColaDinamica<T> implements Cola<T> {
 
+	private List<T> lista = new ArrayList<T>();
+
+	public ColaDinamica(List<T> lista) {
+		this.lista = lista;
+	}
+	
 	@Override
 	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		return false;
+		return lista.isEmpty();
 	}
 
 	@Override
@@ -28,8 +36,7 @@ public class ColaDinamica<T> implements Cola<T> {
 
 	@Override
 	public void vaciar() {
-		// TODO Auto-generated method stub
-
+		lista.clear();
 	}
 
 }
