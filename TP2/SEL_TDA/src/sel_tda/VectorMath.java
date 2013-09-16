@@ -73,7 +73,7 @@ public class VectorMath {
 		
 		if (!(this instanceof VectorMath))
 			return false;
-		
+
 		VectorMath other = (VectorMath) obj;
 		
 		if (cantidadElementos != other.cantidadElementos)
@@ -116,7 +116,7 @@ public class VectorMath {
 		return v1;
 	}
 	
-	public VectorMath multiplicarPorUnEscalar(double r) {
+	public VectorMath producto(double r) {
 		VectorMath v1 = new VectorMath(cantidadElementos);
 
 		for (int i = 0; i < cantidadElementos; i++) {
@@ -125,7 +125,7 @@ public class VectorMath {
 		return v1;
 	}
 		
-	public double productoEscalar(VectorMath v2) throws Exception{
+	public double producto(VectorMath v2) throws Exception{
 		validarLongitudesIguales(this,v2, TipoOperacion.PRODUCTO_ESCALAR);
 		
 		double r = 0;
@@ -136,24 +136,27 @@ public class VectorMath {
 		return r;
 	}
 	
-	public VectorMath multiplicar(MatrizMath m) throws Exception  {
-		if(m.getCantidadColumnas() != cantidadElementos)
-			throw new Exception("No se puede realizar el producto entre el vector y la matriz");
+	public VectorMath producto(MatrizMath m) throws Exception  {
+
+		//if(m.getCantidadColumnas() != cantidadElementos)
+		if(m.getCantidadFilas()!= cantidadElementos)
+			throw new Exception("No se puede realizar el producto. Las cantidad de filas de la matriz debe ser igual a la cantidad de elementos del vector.");
 		
 		VectorMath v1 = new VectorMath(cantidadElementos);
 		double suma;
-		
 		for(int i = 0; i < cantidadElementos; i++) {
 			suma = 0;
 			
-			for(int j = 0; j < m.getCantidadFilas(); j++) {
+			//for(int j = 0; j < m.getCantidadFilas(); j++) {
+			for(int j = 0; j < m.getCantidadColumnas(); j++) {
 				suma += m.getValue(i,j) * vector[i];  
 			}
 			v1.vector[i] = suma;
 		}
 		return v1;
 	}
-
+	
+	
 	public double normaUno() {
 		double r = 0;
 		
@@ -184,16 +187,24 @@ public class VectorMath {
 	
 	public static void main(String[] args) throws Exception {
 		//VectorMath v1 = new VectorMath("prueba1.in");
-		VectorMath v = new VectorMath("vector.txt");
-		MatrizMath m = new MatrizMath("matriz.txt");
-		VectorMath vr= v.multiplicar(m);
-		VectorMath vr1= m.multiplicar(v);
+		VectorMath v1 = new VectorMath("C:/Users/Ale Menutti/Desktop/vector1.txt");
+		//VectorMath v2 = new VectorMath("C:/Users/Ale Menutti/Desktop/vector2.txt");
+		//MatrizMath m = new MatrizMath("C:/Users/Ale Menutti/Desktop/matriz1.txt");
+		//VectorMath vr = v.multiplicar(m);
+		//VectorMath vr1 = m.multiplicar(v);
+
+		MatrizMath m = new MatrizMath(3,2);
+					   m.setValue(0,0,2);
+					   m.setValue(0,1,1);
+					   m.setValue(1,0,5);
+					   m.setValue(1,1,3);
+					   m.setValue(2,0,3);
+					   m.setValue(2,1,2);
+
+		//VectorMath vr = v1.producto(3);
 		
-		System.out.println(m);
-		System.out.println(v);
-		System.out.println(vr);
-		System.out.println(vr1);
-		
+		//System.out.println(res);
+		System.out.println(v1.normaInfinito());
 		
 		/*VectorMath v3=v1.multiplicar(2);
 		VectorMath v4= new VectorMath(5);
