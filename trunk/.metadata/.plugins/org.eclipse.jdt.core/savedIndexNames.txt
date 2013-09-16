@@ -1,0 +1,5 @@
+INDEX VERSION 1.126+C:\Users\Daiana\Desktop\programacion-avanzada\.metadata\.plugins\org.eclipse.jdt.core
+3108431294.index
+2023717660.index
+3706240428.index
+542094340.index
