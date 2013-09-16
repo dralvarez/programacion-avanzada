@@ -11,7 +11,6 @@ public class InterpreteVectorMathArchivo {
 		List<String> lineas = FileUtils.leerArchivo(path);
 		Iterator<String> iteratorLineas = lineas.iterator();
 
-		
 		String[] datos;
 
 		String linea = iteratorLineas.next();
@@ -31,8 +30,6 @@ public class InterpreteVectorMathArchivo {
 		VectorMath vectorMath = new VectorMath(cantidadElementos);
 		vectorMath.setVector(vector);
 		
-		return vectorMath;
-				
-		
+		return vectorMath;			
 	}
 }
