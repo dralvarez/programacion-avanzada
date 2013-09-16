@@ -11,11 +11,9 @@ public class MatrizMathCuadrada extends MatrizMath{
 		super(CANTIDAD_FILAS_DEFAULT,CANTIDAD_COLUMNAS_DEFAULT);
 	}
 	
-
 	public MatrizMathCuadrada(MatrizMath matriz) {
 		super(matriz);
 	}
-
 
 	public MatrizMathCuadrada(int dimension) {
 		super(dimension, dimension);
@@ -77,37 +75,45 @@ public class MatrizMathCuadrada extends MatrizMath{
 		return this.getCantidadFilas();
 	}
 	
-	public MatrizMathCuadrada inversa() {
-		MatrizMathCuadrada aInv = this.clone();
+	public MatrizMathCuadrada inversa() 
+	{
+		if(getCantidadFilas() == getCantidadColumnas() && determinante() != 0)
+		{	
+			int n = getCantidadFilas();
+			MatrizMathCuadrada matInd = clone();
+			MatrizMathCuadrada matIde = new MatrizMathCuadrada(n);
+			matIde.identidad(); //Matriz Identidad
+			MatrizMathCuadrada matUni = new MatrizMathCuadrada(n);
+			
+			// transformación de la matriz y de los términos independientes
+			for (int k = 0; k < n - 1; k++) 
+			{
+				for (int i = k + 1; i < n; i++) 
+				{
+					//independientes
+					for (int s = 0; s < n; s++) 
+						matIde.getMatriz()[i][s] -= (matInd.getMatriz()[i][k] * matIde.getMatriz()[k][s]) / matInd.getMatriz()[k][k];
+					//elementos matriz
+					for (int j = k + 1; j < n; j++) 
+						matInd.getMatriz()[i][j] -= (matInd.getMatriz()[i][k] * matInd.getMatriz()[k][j]) / matInd.getMatriz()[k][k];
+				}
+			}
+			// cálculo de las incógnitas, elementos de la matriz inversa
+			for (int s = 0; s < n; s++) 
+			{
+				matUni.getMatriz()[n - 1][s] = matIde.getMatriz()[n - 1][s] / matInd.getMatriz()[n - 1][n - 1];
+				for (int i = n - 2; i >= 0; i--) 
+				{
+					matUni.getMatriz()[i][s] = matIde.getMatriz()[i][s] / matInd.getMatriz()[i][i];
+					for (int k = n - 1; k > i; k--)
+						matUni.getMatriz()[i][s] -= (matInd.getMatriz()[i][k] * matUni.getMatriz()[k][s]) / matInd.getMatriz()[i][i];
+				}
+			}
+			return matUni;
+		}
 		
-        int n = this.getCantidadColumnas();
-        int k, 
-        	j, 
-        	i;
-
-        for (k = 0; k < n; k++) {
-            for (i = 0; i < n; i++) {
-                for (j = 0; j < n; j++) {
-                    if (i != k && j != k)
-                        aInv.getMatriz()[i][j] -= (aInv.getMatriz()[i][k] * aInv.getMatriz()[k][j]) / aInv.getMatriz()[k][k];
-                }
-
-           		for (j = 0; j < n; j++) {
-           			if (j != k)
-           				aInv.getMatriz()[k][j] = -aInv.getMatriz()[k][j] / aInv.getMatriz()[k][k];
-           		}
-
-           		
-	            for (i = 0; i < n; i++) {
-	                if (i != k)
-	                    aInv.getMatriz()[i][k] = aInv.getMatriz()[i][k] / aInv.getMatriz()[k][k];
-	            }
-	        aInv.getMatriz()[k][k] = 1 / aInv.getMatriz()[k][k];
-            }
-        }
-        
-    return aInv;
-  }
+		return null;
+	}
 
 	@Override
 	public MatrizMathCuadrada clone() {
@@ -116,6 +122,7 @@ public class MatrizMathCuadrada extends MatrizMath{
 		return new MatrizMathCuadrada(clone);
 		
 	}
+	
 	
 	public static void main(String[] args) throws Exception {
 
@@ -134,12 +141,23 @@ public class MatrizMathCuadrada extends MatrizMath{
 
 		double norma_infinito = m.normaInfinito();
 		System.out.println(norma_infinito);
+
+		MatrizMathCuadrada mi = new MatrizMathCuadrada(2);
+		mi.setValue(0,0,1);
+		mi.setValue(0,1,2);
+		mi.setValue(1,0,3);
+		mi.setValue(1,1,4);
+		System.out.println(mi);
 		
-		double error = m.errorCometido();
+		MatrizMathCuadrada inversa = mi.inversa();
+		System.out.println("La inversa de ");
+		System.out.println(mi); 
+		System.out.println(" es: ");
+		System.out.println(inversa);
+		
+		double error = mi.errorCometido();
 		System.out.println("error" + error);
 
-		MatrizMathCuadrada inversa = m.inversa();
-		System.out.println(inversa);
 	}
 	
 }
