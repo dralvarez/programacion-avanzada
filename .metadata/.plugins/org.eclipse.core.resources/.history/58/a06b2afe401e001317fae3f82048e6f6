@@ -1,0 +1,137 @@
+package data_struct.pila;
+
+import java.util.Arrays;
+
+import data_struct.cola.Cola;
+import data_struct.cola.ColaEstatica;
+import data_struct.cola.ColaLlenaException;
+
+public class PilaEstatica<T> implements Pila<T> {
+
+	private static final Integer LONGITUD_ESTANDAR = 10;
+	private T[] vectorElementos;
+	private int tamanioPila;
+	private int cursor;
+	
+	public PilaEstatica() { 
+		this(LONGITUD_ESTANDAR);
+		this.cursor = 0;
+	}
+	
+	public PilaEstatica(int tamanioPila) {
+		this.tamanioPila = tamanioPila;
+		vectorElementos = (T[]) new Object[tamanioPila];
+		this.cursor = 0;
+	}
+	
+	public PilaEstatica(T[] vectorElementos) {
+		this.vectorElementos = vectorElementos;
+		this.tamanioPila = vectorElementos.length;
+		this.cursor = 0;
+	}
+	
+	@Override
+	public T pop() {
+		if(!this.isEmpty()){
+			cursor--;
+			vectorElementos[cursor] = null;
+			cursor--;
+			return vectorElementos[cursor];
+			//return vectorElementos[cursor--];
+		}
+		return null;
+	}
+
+	@Override
+	public void push(T element) {
+		if(this.isFull()){
+			throw new PilaLlenaException();
+		}
+		//vectorElementos[cursor++] = element;
+		vectorElementos[cursor] = element;
+		cursor++;
+	}
+
+	@Override
+	public boolean isEmpty() {
+		boolean isEmpty = true;
+		
+		for(int i=0; i< tamanioPila; i++){
+			if(vectorElementos[i] != null){
+				isEmpty = false;
+				break;
+			}
+		}
+		
+		return isEmpty;
+	}
+	
+	@Override
+	public T peek() {
+		//return vectorElementos[cursor];
+		if(!this.isEmpty()){
+			cursor--;
+			return vectorElementos[cursor];
+		}
+		return null;
+	}
+
+	@Override
+	public void vaciar() {
+		//vectorElementos = null;
+		for (int i = 0; i < tamanioPila; i++)
+			vectorElementos[i] = null;
+	}
+	
+	public boolean isFull(){
+		boolean isFull = true;
+		
+		for(int i=0; i< tamanioPila; i++){
+			isFull &= vectorElementos[i] != null;
+		}
+		
+		return isFull;
+	}
+
+	@Override
+	public String toString() {
+		return Arrays.toString(vectorElementos);
+	}
+	
+	
+	public static void main(String[] args) {
+		// prueba isEmpty
+		System.out.println("Inicio Prueba isEmpty()");
+		PilaEstatica<Integer> pilaVacia = new PilaEstatica<Integer>();
+		System.out.println("Pila vacia: " + pilaVacia.isEmpty());
+		System.out.println("Pila llena: " + pilaVacia.isFull());
+		System.out.println("Fin Prueba isEmpty()");
+			
+		//prueba vaciar pila
+		System.out.println("Inicio Prueba vaciar()");
+		Pila<Integer> pilaVaciada = new PilaEstatica<Integer>();
+		pilaVaciada.push(2);
+		pilaVaciada.push(8);
+		pilaVaciada.push(9);
+		System.out.println("Elemento proximo a desapilar: " + pilaVaciada.peek());
+
+		System.out.println("Pila no vacia: " + pilaVaciada.isEmpty());
+		pilaVaciada.vaciar();
+		System.out.println("Pila vacia: " + pilaVaciada.isEmpty());
+		System.out.println("Fin Prueba vaciar()");
+		
+		//prueba push
+		Pila<Integer> pilaPush = new PilaEstatica<Integer>();
+		pilaPush.push(1);
+		pilaPush.push(5);
+		pilaPush.push(2);
+		System.out.println(pilaPush);
+		System.out.println("pop: " + pilaPush.pop());
+		System.out.println(pilaPush);
+	/*	System.out.println("peek: " + pilaPush.peek());
+		pilaPush.vaciar();
+		System.out.println(pilaPush);*/
+	}
+
+	
+}
