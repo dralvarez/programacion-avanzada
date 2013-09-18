@@ -4,7 +4,6 @@ import java.io.*;
 public class SEL {
 
 	private static final double ERROR_ACEPTABLE = Math.exp(-12);
-	private MatrizMath m;
 	private MatrizMathCuadrada mc;
 	private VectorMath b;
 	private VectorMath x;
@@ -14,7 +13,7 @@ public class SEL {
 	
 	public SEL (int dimension) {
 		this.dimension = dimension;
-		m = new MatrizMath(dimension,dimension);
+		mc = new MatrizMathCuadrada(dimension);
 		b = new VectorMath(dimension);
 		x = new VectorMath(dimension);
 		
@@ -41,14 +40,14 @@ public class SEL {
 					System.out.println("El tamaño del SEL es inferior a 2");
 					System.exit(1);
 				}
-				m = new MatrizMath(dimension, dimension);
+				mc = new MatrizMathCuadrada(dimension);
 				
 				int tope_mat = 0;
 					
 				while((linea = br.readLine()) != null && tope_mat < dimension * dimension)
 				{
 					String[] datos=linea.split(" ");
-					m.setValue(Integer.parseInt(datos[0]), Integer.parseInt(datos[1]), Double.parseDouble(datos[2]));
+					mc.setValue(Integer.parseInt(datos[0]), Integer.parseInt(datos[1]), Double.parseDouble(datos[2]));
 					tope_mat++;
 				}
 							 
@@ -82,12 +81,12 @@ public class SEL {
 		}
 	}
 
-	public MatrizMath getM() {
-		return m;
+	public MatrizMathCuadrada getM() {
+		return mc;
 	}
 
-	public void setM(MatrizMath m) {
-		this.m = m;
+	public void setM(MatrizMathCuadrada mc) {
+		this.mc = mc;
 	}
 
 	public VectorMath getV() {
@@ -115,16 +114,16 @@ public class SEL {
 	}
 	
 	public void resolverSEL() throws Exception {
-	//	this.x = mc.inversa().multiplicar(this.b);
+		this.x = mc.inversa().multiplicar(this.b);
 		this.calcularErrorSolucion();
 	}
 	
 	private void calcularErrorSolucion() throws Exception {
-		error = (m.multiplicar(x).restar(b)).normaDos();
+		error = (mc.multiplicar(x).restar(b)).normaDos();
 	}
 	
 	public String toString(){
-		return "Matriz: \n"+this.m.toString()+"\nVector: "+this.b.toString();
+		return "Matriz: \n"+this.mc.toString()+"\nVector: "+this.b.toString();
 	}
 	
 	public  boolean test() throws Exception{  // probador de matriz inversa, A*A-1= I  &&   ||I-I'||2 = error
@@ -144,7 +143,7 @@ public class SEL {
 		MatrizMath m2 = new MatrizMath(dimension, dimension); //matriz identidad 
 		m2.identidad();
 		MatrizMath m3 = new MatrizMath(dimension, dimension); //matriz identidad surgida de multiplicar la matriz por su inversa		
-		m3 = m.multiplicar(m1);
+		m3 = mc.multiplicar(m1);
 		m2.restaMatrizMath(m3);   //resto I-I' y saco su normaDos
 //		error += m2.normaDos();
 	}
@@ -160,6 +159,7 @@ public class SEL {
 		a.mostrarResultado();
 		fin = System.currentTimeMillis();
 		System.out.println(nombre + ": " + (fin - inicio) + " ms");
+			
 	/*	
 		nombre = "3x3.in";
 		inicio = System.currentTimeMillis();
