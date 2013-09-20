@@ -30,6 +30,8 @@ public class SELTest {
 	
 	private void test(String path){
 		long inicio = System.currentTimeMillis();
+		System.out.println("Inicio Prueba: " + path);
+		
 		SEL sel = new SEL(path);
 		sel.resolverSEL();
 		
@@ -38,11 +40,12 @@ public class SELTest {
 		double errorSolucionConResta = calcularErrorSolucionConResta(sel);
 		
 		System.out.println("Error calculado usando inversa: " + errorSolucionConInversa + ". Es aceptable: " + esErrorAceptable(errorSolucionConInversa));
-		System.out.println("Error calculado usando rest: " + errorSolucionConResta + ". Es aceptable: " + esErrorAceptable(errorSolucionConResta));
+		System.out.println("Error calculado usando resta: " + errorSolucionConResta + ". Es aceptable: " + esErrorAceptable(errorSolucionConResta));
 		
 		long fin = System.currentTimeMillis();
 		
 		System.out.println(path + ": " + (fin - inicio) + " ms");
+		System.out.println("======================================");
 	}
 	
 	public static void main(String[] args) throws Exception {
@@ -53,15 +56,15 @@ public class SELTest {
 		tester.test("5x5.in");
 		tester.test("10x10.in");
 		tester.test("20x20.in");
-		tester.test("50x50.in");
-		tester.test("100x100.in");
-		tester.test("200x200.in");
-		tester.test("400x400.in");
-		tester.test("500x500.in");
-		tester.test("750x750.in");
-		tester.test("850x850.in");
-		tester.test("1000x1000.in");
-		tester.test("1200x1200.in");
-		tester.test("1500x1500.in");
+//		tester.test("30x30.in");
+//		tester.test("100x100.in");
+//		tester.test("200x200.in");
+//		tester.test("400x400.in");
+//		tester.test("500x500.in");
+//		tester.test("750x750.in");
+//		tester.test("850x850.in");
+//		tester.test("1000x1000.in");
+//		tester.test("1200x1200.in");
+//		tester.test("1500x1500.in");
 	}
 }
