@@ -47,7 +47,7 @@ public class PilaDinamica<T> implements Pila<T> {
 	public static void main(String[] args) {
 		// prueba isEmpty
 		System.out.println("Inicio Prueba isEmpty()");
-		PilaDinamica<Integer> pilaVacia = new PilaDinamica<>();
+		PilaDinamica<Integer> pilaVacia = new PilaDinamica<Integer>();
 		System.out.println("Pila vacia: " + pilaVacia.isEmpty());
 		System.out.println("Fin Prueba isEmpty()");
 			
