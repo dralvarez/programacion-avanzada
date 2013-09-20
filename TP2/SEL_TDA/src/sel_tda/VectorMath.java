@@ -3,7 +3,7 @@ package sel_tda;
 import java.util.Arrays;
 
 public class VectorMath {
-	private int cantidadElementos; //n = cantidad de elementos
+	private int cantidadElementos;
 	private double[] vector;
 
 
@@ -105,7 +105,7 @@ public class VectorMath {
 			throw new RuntimeException ("Las longitudes de los vectores son diferentes, no se puede efectuar la operacion " + tipoOperacion);
 	}
 
-	public VectorMath restar(VectorMath v2) throws Exception{
+	public VectorMath restar(VectorMath v2) {
 		validarLongitudesIguales(this,v2, TipoOperacion.RESTA);
 
 		VectorMath v1 = new VectorMath(cantidadElementos);
@@ -216,6 +216,10 @@ public class VectorMath {
 		System.out.println(v1.normaUno());
 		System.out.println(v1.normaDos());
 		System.out.println(v1.normaInfinito());*/
+	}
+
+	public String getDimensionAsString() {
+		return String.valueOf(cantidadElementos);
 	}
 }
 

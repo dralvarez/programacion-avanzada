@@ -22,50 +22,22 @@ public class MatrizMathCuadrada extends MatrizMath{
 	public MatrizMathCuadrada(String path) {
 		super(path);
 	}
-
-	public double normaUno() { //máxima suma de las columnas
-		double aux;
-		VectorMath vec = new VectorMath(this.getCantidadColumnas());
-
-		for (int j = 0; j < this.getCantidadColumnas(); j++) {
-			aux = 0;
-			for (int i = 0; i < this.getCantidadFilas(); i++)
-				aux += Math.abs(this.getMatriz()[i][j]);
-			vec.setValue(j,aux);
-		}
-		return vec.normaInfinito();
-	}
 	
-	public double normaDos() {
-		double aux = 0;
+	public static MatrizMathCuadrada identidad(int dimension) {
+		MatrizMathCuadrada matriz = new MatrizMathCuadrada(dimension);
 
-		for (int i = 0; i < this.getCantidadFilas(); i++)
-			for (int j = 0; j < this.getCantidadColumnas(); j++)
-				aux += Math.pow(Math.abs(this.getMatriz()[i][j]), 2);
-
-		return Math.sqrt(aux);
+		for(int i = 0; i < dimension; i++)
+			matriz.getMatriz()[i][i] = 1;
+		
+		return matriz;
 	}
 
-	public double normaInfinito() { //máxima suma de las filas
-		double aux;
-		VectorMath vec = new VectorMath(this.getCantidadColumnas());
-
-		for (int i = 0; i < this.getCantidadFilas(); i++) {
-			aux = 0;
-			for (int j = 0; j < this.getCantidadColumnas(); j++)
-				aux += Math.abs(this.getMatriz()[i][j]);
-			vec.setValue(i, aux);
-		}
-		return vec.normaInfinito();
-	}
-	
 	public double errorCometido() throws Exception {
 		double error = 0;
 		
-		MatrizMathCuadrada identidad = this.clone(); //matriz identidad 
-		identidad.identidad();
+		MatrizMathCuadrada identidad = identidad(getDimension()); //matriz identidad 
 		
-		identidad.restaMatrizMath(this.multiplicar(this.inversa()));   //resto I-I' y saco su normaDos
+		identidad.restar(this.multiplicar(this.inversa()));   //resto I-I' y saco su normaDos
 		error += identidad.normaDos();
 		
 		return error;
@@ -77,12 +49,11 @@ public class MatrizMathCuadrada extends MatrizMath{
 	
 	public MatrizMathCuadrada inversa() 
 	{
-		if(getCantidadFilas() == getCantidadColumnas() && determinante() != 0)
+		if(determinante() != 0)
 		{	
-			int n = getCantidadFilas();
-			MatrizMathCuadrada matInd = clone();
-			MatrizMathCuadrada matIde = new MatrizMathCuadrada(n);
-			matIde.identidad(); //Matriz Identidad
+			int n = getDimension();
+			MatrizMathCuadrada matInd = new MatrizMathCuadrada(this);
+			MatrizMathCuadrada matIde = MatrizMathCuadrada.identidad(n);
 			MatrizMathCuadrada matUni = new MatrizMathCuadrada(n);
 			
 			// transformación de la matriz y de los términos independientes
@@ -117,10 +88,8 @@ public class MatrizMathCuadrada extends MatrizMath{
 
 	@Override
 	public MatrizMathCuadrada clone() {
-
 		MatrizMath clone = super.clone();
 		return new MatrizMathCuadrada(clone);
-		
 	}
 	
 	

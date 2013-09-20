@@ -3,22 +3,31 @@ import java.io.*;
 
 public class SEL {
 
-	private static final double ERROR_ACEPTABLE = Math.exp(-12);
-	private MatrizMathCuadrada mc;
+	private MatrizMathCuadrada a;
 	private VectorMath b;
 	private VectorMath x;
-	private double error;
 	private int dimension;
-	
 	
 	public SEL (int dimension) {
 		this.dimension = dimension;
-		mc = new MatrizMathCuadrada(dimension);
+		a = new MatrizMathCuadrada(dimension);
 		b = new VectorMath(dimension);
 		x = new VectorMath(dimension);
-		
 	}
-		
+	
+	public SEL(MatrizMathCuadrada mc, VectorMath b) {
+		validarRangosMatrizYVector(mc,b);
+		this.a = mc;
+		this.b = b;
+	}
+
+	private void validarRangosMatrizYVector(MatrizMathCuadrada matriz,
+			VectorMath vector) {
+		if(matriz.getDimension() != vector.getCantidadElementos()){
+			throw new MatrizYVectorDeDistintaDimensionException(matriz, vector);
+		}
+	}
+
 	public SEL(String path)
 	{
 		File f = null;
@@ -40,14 +49,14 @@ public class SEL {
 					System.out.println("El tamaño del SEL es inferior a 2");
 					System.exit(1);
 				}
-				mc = new MatrizMathCuadrada(dimension);
+				a = new MatrizMathCuadrada(dimension);
 				
 				int tope_mat = 0;
 					
 				while((linea = br.readLine()) != null && tope_mat < dimension * dimension)
 				{
 					String[] datos=linea.split(" ");
-					mc.setValue(Integer.parseInt(datos[0]), Integer.parseInt(datos[1]), Double.parseDouble(datos[2]));
+					a.setValue(Integer.parseInt(datos[0]), Integer.parseInt(datos[1]), Double.parseDouble(datos[2]));
 					tope_mat++;
 				}
 							 
@@ -81,23 +90,23 @@ public class SEL {
 		}
 	}
 
-	public MatrizMathCuadrada getM() {
-		return mc;
+	public MatrizMathCuadrada getA() {
+		return a;
 	}
 
-	public void setM(MatrizMathCuadrada mc) {
-		this.mc = mc;
+	public void setA(MatrizMathCuadrada a) {
+		this.a = a;
 	}
 
-	public VectorMath getV() {
+	public VectorMath getB() {
 		return b;
 	}
 
-	public void setV(VectorMath b) {
+	public void setB(VectorMath b) {
 		this.b = b;
 	}
 
-	public int getDim() {
+	public int getDimension() {
 		return dimension;
 	}
 
@@ -105,175 +114,24 @@ public class SEL {
 		this.dimension = dim;
 	}
 	
-	public void mostrarResultado(){
-		//System.out.println(this.x.toString());
-	
-		//System.out.println("Matriz: \n"+this.m.toString()+"\nVector: \n"+this.b.toString() + "\n\nResultado: \n" + this.x.toString());
-		System.out.println("Resultado: \n" + this.x.toString());
-		System.out.println("Error: " + error);
+	public VectorMath getX() {
+		return x;
 	}
 	
-	public void resolverSEL() throws Exception {
-		this.x = mc.inversa().multiplicar(this.b);
-		this.calcularErrorSolucion();
-	}
 	
-	private void calcularErrorSolucion() throws Exception {
-		error = (mc.multiplicar(x).restar(b)).normaDos();
+	/**
+	 * AX = B
+	 * A-1.A.X = A-1.B
+	 * I X - A-1.B
+	 * X = A-1.B
+	 * @throws Exception
+	 */
+	public void resolverSEL() {
+		this.x = a.inversa().multiplicar(this.b);
 	}
 	
 	public String toString(){
-		return "Matriz: \n"+this.mc.toString()+"\nVector: "+this.b.toString();
+		return "Matriz: \n"+this.a.toString()+"\nVector: "+this.b.toString();
 	}
-	
-	public  boolean test() throws Exception{  // probador de matriz inversa, A*A-1= I  &&   ||I-I'||2 = error
-		this.ErrorSolucion();
-
-		if(error<ERROR_ACEPTABLE)		// si el error es menor a e a la -12, entonces es un buen error
-			return true;
-		else
-			return false;
-	}	
-	
-	private void ErrorSolucion() throws Exception {
-		this.error = 0;
-		
-		MatrizMath m1 = new MatrizMath(dimension, dimension); // matriz inversa
-//		m1 = m.inversa();
-		MatrizMath m2 = new MatrizMath(dimension, dimension); //matriz identidad 
-		m2.identidad();
-		MatrizMath m3 = new MatrizMath(dimension, dimension); //matriz identidad surgida de multiplicar la matriz por su inversa		
-		m3 = mc.multiplicar(m1);
-		m2.restaMatrizMath(m3);   //resto I-I' y saco su normaDos
-//		error += m2.normaDos();
-	}
-	
-	public static void main(String[] args) throws Exception {
-		
-		double inicio, fin;
-		String nombre = "2x2.in";
-		
-		inicio = System.currentTimeMillis();
-		SEL a=new SEL(nombre);
-		a.resolverSEL();
-		a.mostrarResultado();
-		fin = System.currentTimeMillis();
-		System.out.println(nombre + ": " + (fin - inicio) + " ms");
-			
-	/*	
-		nombre = "3x3.in";
-		inicio = System.currentTimeMillis();
-		SEL b=new SEL(nombre);
-		b.resolverSEL();
-		b.mostrarResultado();
-		fin = System.currentTimeMillis();
-		System.out.println(nombre + ": " + (fin - inicio) + " ms");
-		
-		nombre = "5x5.in";
-		inicio = System.currentTimeMillis();
-		SEL c=new SEL(nombre);
-		c.resolverSEL();
-		c.mostrarResultado();
-		fin = System.currentTimeMillis();
-		System.out.println(nombre + ": " + (fin - inicio) + " ms");
-		
-		nombre = "10x10.in";
-		inicio = System.currentTimeMillis();
-		SEL d=new SEL(nombre);
-		d.resolverSEL();
-		d.mostrarResultado();
-		fin = System.currentTimeMillis();
-		System.out.println(nombre + ": " + (fin - inicio) + " ms");
-		
-		nombre = "20x20.in";
-		inicio = System.currentTimeMillis();
-		SEL e=new SEL(nombre);
-		e.resolverSEL();
-		e.mostrarResultado();
-		fin = System.currentTimeMillis();
-		System.out.println(nombre + ": " + (fin - inicio) + " ms");
-		
-		nombre = "50x50.in";
-		inicio = System.currentTimeMillis();
-		SEL f=new SEL(nombre);
-		f.resolverSEL();
-		f.mostrarResultado();
-		fin = System.currentTimeMillis();
-		System.out.println(nombre + ": " + (fin - inicio) + " ms");
-
-		nombre = "100x100.in";
-		inicio = System.currentTimeMillis();
-		SEL g=new SEL(nombre);
-		g.resolverSEL();
-		g.mostrarResultado();
-		fin = System.currentTimeMillis();
-		System.out.println(nombre + ": " + (fin - inicio) + " ms");
-		
-		nombre = "200x200.in";
-		inicio = System.currentTimeMillis();
-		SEL h=new SEL(nombre);
-		h.resolverSEL();
-		h.mostrarResultado();
-		fin = System.currentTimeMillis();
-		System.out.println(nombre + ": " + (fin - inicio) + " ms");
-		
-		nombre = "400x400.in";
-		inicio = System.currentTimeMillis();
-		SEL i=new SEL(nombre);
-		i.resolverSEL();
-		i.mostrarResultado();
-		fin = System.currentTimeMillis();
-		System.out.println(nombre + ": " + (fin - inicio) + " ms");
-		
-		nombre = "500x500.in";
-		inicio = System.currentTimeMillis();
-		SEL j=new SEL(nombre);
-		j.resolverSEL();
-		j.mostrarResultado();
-		fin = System.currentTimeMillis();
-		System.out.println(nombre + ": " + (fin - inicio) + " ms");
-		
-		nombre = "750x750.in";
-		inicio = System.currentTimeMillis();
-		SEL k=new SEL(nombre);
-		k.resolverSEL();
-		k.mostrarResultado();
-		fin = System.currentTimeMillis();
-		System.out.println(nombre + ": " + (fin - inicio) + " ms");
-		
-		nombre = "850x850.in";
-		inicio = System.currentTimeMillis();
-		SEL l=new SEL(nombre);
-		l.resolverSEL();
-		l.mostrarResultado();
-		fin = System.currentTimeMillis();
-		System.out.println(nombre + ": " + (fin - inicio) + " ms");
-		
-		nombre = "1000x1000.in";
-		inicio = System.currentTimeMillis();
-		SEL m=new SEL(nombre);
-		m.resolverSEL();
-		m.mostrarResultado();
-		fin = System.currentTimeMillis();
-		System.out.println(nombre + ": " + (fin - inicio) + " ms");
-		
-		nombre = "1200x1200.in";
-		inicio = System.currentTimeMillis();
-		SEL n=new SEL(nombre);
-		n.resolverSEL();
-		n.mostrarResultado();
-		fin = System.currentTimeMillis();
-		System.out.println(nombre + ": " + (fin - inicio) + " ms");
-		
-		nombre = "1500x1500.in";
-		inicio = System.currentTimeMillis();
-		SEL o=new SEL(nombre);
-		o.resolverSEL();
-		o.mostrarResultado();
-		fin = System.currentTimeMillis();
-		System.out.println(nombre + ": " + (fin - inicio) + " ms");
-	*/
-	}
-	
 	
 }
