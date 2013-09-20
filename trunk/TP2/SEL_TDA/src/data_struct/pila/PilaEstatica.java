@@ -2,10 +2,6 @@ package data_struct.pila;
 
 import java.util.Arrays;
 
-import data_struct.cola.Cola;
-import data_struct.cola.ColaEstatica;
-import data_struct.cola.ColaLlenaException;
-
 public class PilaEstatica<T> implements Pila<T> {
 
 	private static final Integer LONGITUD_ESTANDAR = 10;
@@ -33,11 +29,9 @@ public class PilaEstatica<T> implements Pila<T> {
 	@Override
 	public T pop() { //elimina el primer elemento de la pila (tope) y devuelve el nuevo tope de pila
 		if(!this.isEmpty()){
-			cursor--;
+			T elemento = vectorElementos[--cursor];
 			vectorElementos[cursor] = null;
-			cursor--;
-			return vectorElementos[cursor];
-			//return vectorElementos[cursor--];
+			return elemento;
 		}
 		return null;
 	}
@@ -47,9 +41,7 @@ public class PilaEstatica<T> implements Pila<T> {
 		if(this.isFull()){
 			throw new PilaLlenaException();
 		}
-		//vectorElementos[cursor++] = element;
-		vectorElementos[cursor] = element;
-		cursor++;
+		vectorElementos[cursor++] = element;
 	}
 
 	@Override
@@ -68,19 +60,17 @@ public class PilaEstatica<T> implements Pila<T> {
 	
 	@Override
 	public T peek() {
-		//return vectorElementos[cursor];
 		if(!this.isEmpty()){
-			cursor--;
-			return vectorElementos[cursor];
+			return vectorElementos[cursor-1];
 		}
 		return null;
 	}
 
 	@Override
 	public void vaciar() {
-		//vectorElementos = null;
-		for (int i = 0; i < tamanioPila; i++)
-			vectorElementos[i] = null;
+		cursor = 0;
+		tamanioPila = LONGITUD_ESTANDAR;
+		vectorElementos = (T[]) new Object[tamanioPila];
 	}
 	
 	public boolean isFull(){
