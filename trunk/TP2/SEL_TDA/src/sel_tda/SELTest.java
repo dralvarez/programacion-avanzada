@@ -30,9 +30,10 @@ public class SELTest {
 	
 	private void test(String path){
 		long inicio = System.currentTimeMillis();
+		String fullPath = "pruebas/sel_test/" + path;
 		System.out.println("Inicio Prueba: " + path);
 		
-		SEL sel = new SEL(path);
+		SEL sel = new SEL(fullPath);
 		sel.resolverSEL();
 		
 		System.out.println("Resultado: " + sel.getX());
@@ -52,10 +53,10 @@ public class SELTest {
 		SELTest tester = new SELTest();
 		
 		tester.test("2x2.in");
-		tester.test("3x3.in");
-		tester.test("5x5.in");
-		tester.test("10x10.in");
-		tester.test("20x20.in");
+//		tester.test("3x3.in");
+//		tester.test("5x5.in");
+//		tester.test("10x10.in");
+//		tester.test("20x20.in");
 //		tester.test("30x30.in");
 //		tester.test("100x100.in");
 //		tester.test("200x200.in");
