@@ -1,7 +1,6 @@
 package data_struct.pila;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class PilaDinamica<T> implements Pila<T> {
@@ -9,7 +8,6 @@ public class PilaDinamica<T> implements Pila<T> {
 	private List<T> lista = new ArrayList<T>(); 
 	
 	public PilaDinamica() {
-		this.lista = lista;
 	}
 	
 	public PilaDinamica(List<T> lista) {
