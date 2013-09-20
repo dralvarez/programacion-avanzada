@@ -1,10 +1,6 @@
 package sel_tda;
 
 import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
-
-import utils.FileUtils;
 
 public class MatrizMath implements Cloneable{
 

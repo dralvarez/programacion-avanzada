@@ -41,8 +41,7 @@ public class SEL {
 			
 			String linea = br.readLine();
 			
-			if(linea != null)
-			{
+			if(linea != null) {
 				dimension = Integer.parseInt(linea);
 				
 				if(dimension < 2) {
@@ -53,8 +52,7 @@ public class SEL {
 				
 				int tope_mat = 0;
 					
-				while((linea = br.readLine()) != null && tope_mat < dimension * dimension)
-				{
+				while((linea = br.readLine()) != null && tope_mat < dimension * dimension) {
 					String[] datos=linea.split(" ");
 					a.setValue(Integer.parseInt(datos[0]), Integer.parseInt(datos[1]), Double.parseDouble(datos[2]));
 					tope_mat++;
@@ -72,19 +70,14 @@ public class SEL {
 				}
 			}
 		}
-		catch(Exception e)
-		{
+		catch(Exception e) {
 			e.printStackTrace();
 		}
-		finally
-		{
-			try
-			{ 
+		finally	{
+			try	{ 
 				if(fr!= null)
 					fr.close();
-			}	
-			catch(Exception e2)
-			{
+			} catch(Exception e2) {
 				e2.printStackTrace();
 			}
 		}
