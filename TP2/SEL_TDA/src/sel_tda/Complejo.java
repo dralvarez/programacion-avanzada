@@ -32,6 +32,14 @@ public class Complejo implements Comparable<Complejo> {
 		return new Complejo(this.parteReal + real, this.parteCompleja);
 	}
 	
+	public Complejo restar(Complejo complejo){
+		return new Complejo(this.parteReal - complejo.parteReal, this.parteCompleja - complejo.parteCompleja);
+	}
+	
+	public Complejo restar(Double real){
+		return new Complejo(this.parteReal - real, this.parteCompleja);
+	}
+	
 	public Complejo multiplicar(Complejo complejo){
 		double parteReal = (this.parteReal * complejo.parteReal) - (this.parteCompleja * complejo.parteCompleja);
 		double parteCompleja = (this.parteReal * complejo.parteCompleja) - (this.parteCompleja * complejo.parteReal);
@@ -42,9 +50,7 @@ public class Complejo implements Comparable<Complejo> {
 	public Complejo multiplicar(Double real){
 		return new Complejo(this.parteReal * real, this.parteCompleja * real);
 	}
-	
 		
-	
 	public Complejo dividir(Double divisor){
 		double parteReal = this.parteReal / divisor;
 		double parteCompleja = this.parteCompleja / divisor;
@@ -61,7 +67,6 @@ public class Complejo implements Comparable<Complejo> {
 		return dividendo.dividir(divisorDouble);
 	}
 	
-	
 	public double modulo(){
 		double parteReal = this.parteReal * this.parteReal;
 		double parteCompleja = this.parteCompleja * this.parteCompleja;
@@ -74,11 +79,20 @@ public class Complejo implements Comparable<Complejo> {
 		return parteReal + " + " + parteCompleja + "i";
 	}
 	
-	
 	@Override
 	public boolean equals(Object obj) {
 		Complejo complejo = (Complejo) obj;
 		return this.parteReal == complejo.parteReal && this.parteCompleja == complejo.parteCompleja;
+	}
+	
+	@Override
+	public int compareTo(Complejo arg0) {
+		if(this.modulo() > arg0.modulo())
+			return 1;
+		else if(this.modulo() < arg0.modulo()) 
+			return -1;
+		else
+			return 0;
 	}
 
 	public static void main(String[] args) {
@@ -101,21 +115,27 @@ public class Complejo implements Comparable<Complejo> {
 		
 		System.out.println(sumar);
 		
+		// Prueba resta
+		Complejo minuendo = new Complejo(1, 2);
+		Complejo sustraendo = new Complejo(4,3);				
+		Complejo restar = minuendo.restar(sustraendo);
+				
+		System.out.println(restar);
+		
 		// Prueba equals		
 		boolean sonIguales = sumaEsperada.equals(sumar);
 
 		Comparable c = new Complejo();
 		String s ="";
 		c.compareTo(c);
-		// Prueba division
 		
+		// Prueba division
 		double divisor = 2;
 		
 		Complejo dividendo = new Complejo(5, 6);
 		System.out.println(dividendo + " dividido " + divisor + " = " + dividendo.dividir(divisor));
 		
-		// Prueba división compleja
-		
+		// Prueba división compleja	
 		Complejo comp = new Complejo(5, 6);
 		Complejo comp1 = new Complejo(7, 8);
 		
@@ -123,15 +143,4 @@ public class Complejo implements Comparable<Complejo> {
 		System.out.println(comp2);
 		
 	}
-
-	@Override
-	public int compareTo(Complejo arg0) {
-		if(this.modulo() > arg0.modulo())
-			return 1;
-		else if(this.modulo() < arg0.modulo()) 
-			return -1;
-		else
-			return 0;
-	}
-
 }
