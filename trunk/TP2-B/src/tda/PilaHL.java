@@ -1,20 +1,20 @@
 package tda;
 
-public class PilaHL extends Lista implements Pila{
+public class PilaHL extends Lista implements Pila {
 
-	public PilaHL(){
+	public PilaHL() {
 		super();
 	}
 
-	public boolean empty(){
+	public boolean empty() {
 		return super.empty();
 	}
 
-	public void push(Object datos){
+	public void push(Object datos) {
 		super.push_front(datos);
 	}
 
-	public Object pop(){
+	public Object pop() {
 		return super.pop_front();
 	}
 
@@ -22,35 +22,31 @@ public class PilaHL extends Lista implements Pila{
 		return super.buscar(1);
 	}
 
-	public void vaciar(){
+	public void vaciar() {
 		super.vaciar();
 	}
-
-
-	
 
 	public static void main(String[] args) {
 		
 		try{
-			Pila p=new PilaHL();
-			double inicio, fin;
-			String nombre= "Apilar";
+			Pila p = new PilaHL();
+			double  inicio, 
+					fin;
+			String nombre = "Apilar";
 			
 			inicio = System.currentTimeMillis();
-			for(int i=0; i<1000000; i++)
+			for (int i = 0; i < 1000000; i++)
 				p.push(i);
 			fin = System.currentTimeMillis();
 			System.out.println(nombre + ": " + (fin - inicio) + " ms");
 			
 			nombre= "Desapilar";
 			inicio = System.currentTimeMillis();
-			for(int i=0; i<1000000; i++)
+			for (int i = 0; i < 1000000; i++)
 				p.pop();
 			
 			fin = System.currentTimeMillis();
 			System.out.println(nombre + ": " + (fin - inicio) + " ms");
-			
-			
 			}
 			catch (Exception e) {
 				System.out.println(e);

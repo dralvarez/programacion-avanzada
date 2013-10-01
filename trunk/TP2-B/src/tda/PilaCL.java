@@ -4,15 +4,15 @@ public class PilaCL implements Pila {
 	
 	private Lista l;
 	
-	public 	PilaCL(){
+	public 	PilaCL() {
 		l = new Lista();
 	}
 	
-	public boolean empty(){
+	public boolean empty() {
 		return l.empty();
 	}
 	
-	public void push(Object datos){
+	public void push(Object datos) {
 		l.push_front(datos);
 	}
 
@@ -24,7 +24,7 @@ public class PilaCL implements Pila {
 		return l.buscar(1);
 	}
 
-	public void vaciar(){
+	public void vaciar() {
 		l.vaciar();
 	}
 	
@@ -32,39 +32,29 @@ public class PilaCL implements Pila {
 		l.mostrar();
 	}
 	
-	
-	
-	/**
-	 * @param args
-	 */
 	public static void main(String[] args) {
 		
 		try{
-			Pila p=new PilaCL();
+			Pila p = new PilaCL();
 			double inicio, fin;
-			String nombre= "Apilar";
+			String nombre = "Apilar";
 			
 			inicio = System.currentTimeMillis();
-			for(int i=0; i<1000000; i++)
+			for (int i = 0; i < 1000000; i++)
 				p.push(i);
 			fin = System.currentTimeMillis();
 			System.out.println(nombre + ": " + (fin - inicio) + " ms");
 			
 			nombre= "Desapilar";
 			inicio = System.currentTimeMillis();
-			for(int i=0; i<1000000; i++)
+			for (int i = 0; i < 1000000; i++)
 				p.pop();
 			
 			fin = System.currentTimeMillis();
-			System.out.println(nombre + ": " + (fin - inicio) + " ms");
-			
-			
+			System.out.println(nombre + ": " + (fin - inicio) + " ms");			
 			}
 			catch (Exception e) {
 				System.out.println(e);
-			}
+		}
 	}
-
-
-
 }
