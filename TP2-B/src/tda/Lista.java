@@ -129,154 +129,150 @@ public class Lista {
 				ultimo=aux;
 		}
 		else {
-			Nodo rec=new Nodo();
-			rec=this.primero;
-			cont=1;
-			while(cont<pos)
-			{
-				if(cont+1==pos)
-				{
-					aux.sig=rec.sig;
-					rec.sig=aux;
+			Nodo rec = new Nodo();
+			rec = this.primero;
+			cont = 1;
+			
+			while (cont < pos)	{
+				if (cont + 1 == pos) {
+					aux.sig = rec.sig;
+					rec.sig = aux;
 					cont++;
-					if(aux.sig==null)
+					
+					if (aux.sig==null)
 						ultimo=aux;
 				}
-				else
-				{
-					rec=rec.sig;
+				else {
+					rec = rec.sig;
 					cont++;
 				}
 			}
 		}
-
 	}
 	
-	public void remove(Object dato) throws Exception 	{
-		if(primero==null)
+	public void remove(Object dato) throws Exception {
+		if (primero == null)
 			throw new Exception ("Lista Vacia");
 		
-		Nodo rec=new Nodo();
-		rec=this.primero;
-		Nodo aux=new Nodo();
-		aux=this.primero;
-		if(rec==ultimo && rec.dato==dato)
-			aux=primero=ultimo=null;
-		if(rec.dato==dato)
-			aux=rec.sig;
-		rec=rec.sig;
-		while(rec!=null)
-		{
-			if(rec.dato==dato)
-			{
-				primero.sig=rec.sig;
-			}
-			rec=rec.sig;
-			primero=primero.sig;
-		}
-		primero=aux;
-	}
-	
-	public void reverse (){
+		Nodo rec = new Nodo();
+		rec = this.primero;
+		Nodo aux = new Nodo();
+		aux = this.primero;
 		
-	Lista l= new Lista();
-	while(primero!=null)
-		l.push_back(this.pop_back());
-	
-	this.primero=l.primero;
-	this.ultimo=l.ultimo;
+		if (rec == ultimo && rec.dato == dato)
+			aux = primero = ultimo = null;
+		if (rec.dato == dato)
+			aux = rec.sig;
+		rec = rec.sig;
+		
+		while (rec != null) {
+			if (rec.dato == dato) {
+				primero.sig = rec.sig;
+			}
+			rec = rec.sig;
+			primero = primero.sig;
+		}
+		primero = aux;
 	}
 	
+	public void reverse () {
+		
+		Lista l = new Lista();
+		
+		while (primero!=null)
+			l.push_back(this.pop_back());
+		
+		this.primero = l.primero;
+		this.ultimo = l.ultimo;
+	}
 	
-	public Object buscar(int pos) throws Exception{
-		int cont=1;
-		Nodo aux1= new Nodo();
-		aux1=primero;
-		while(aux1!=null && cont<pos)
-			{
+	public Object buscar(int pos) throws Exception {
+		int cont = 1;
+		Nodo aux1 = new Nodo();
+		aux1 = primero;
+		
+		while(aux1 != null && cont < pos) {
 			cont++;
-			aux1=aux1.sig;
-			}
-		if(pos<1 || cont!=pos)
+			aux1 = aux1.sig;
+		}
+		if (pos < 1 || cont != pos)
 			throw new Exception("La posición no existe");
 		
 		return aux1.dato;
 	}
 	
-	public Object buscar(Object dato) throws Exception{  //revisar
-		int cont=1;
-		Nodo aux1= new Nodo();
-		aux1=primero;
-		while(aux1!=null && aux1.dato!=dato)
-			{
+	public Object buscar(Object dato) throws Exception {  //revisar
+		int cont = 1;
+		Nodo aux1 = new Nodo();
+		aux1 = primero;
+		
+		while(aux1!=null && aux1.dato!=dato) {
 			cont++;
-			aux1=aux1.sig;
-			}
+			aux1 = aux1.sig;
+		}
+		
 		if(aux1.dato!=dato)
 			throw new Exception("El objeto no existe");
 		
 		return cont;
 	}
-	public boolean empty(){
-		if(primero==null)
+	
+	public boolean empty() {
+		if (primero == null)
 			return true;
 		return false;
-	};
-	
-	public void vaciar(){
-		
-		primero=ultimo=null;	
 	}
 	
-	public Object erase(int pos) throws Exception 	{
-		if(primero==null)
+	public void vaciar() {
+		primero = ultimo = null;	
+	}
+	
+	public Object erase(int pos) throws Exception {
+		if (primero == null)
 			throw new Exception ("La pila esta vacia");
 		
-		int prob=1;
-		Nodo sec=new Nodo();
-		sec=primero;
-		while(sec.sig!=null)
-		{
-			sec=sec.sig;
+		int prob = 1;
+		Nodo sec = new Nodo();
+		sec = primero;
+		
+		while (sec.sig != null) {
+			sec = sec.sig;
 			prob++;
 		}
-		if(prob<pos|| pos<1)
+		
+		if (prob < pos|| pos < 1)
 			throw new Exception ("La posición elegida no existe");
 			
+		int cont = 1;
+		Nodo rec = new Nodo();
+		rec = primero;
+		sec = primero.sig;
 		
-		int cont=1;
-		Nodo rec=new Nodo();
-		rec=primero;
-		sec=primero.sig;
-		if(pos==1)
-		{
-			primero=primero.sig;
-			if(ultimo==rec)
-				ultimo=null;
+		if (pos == 1)	{
+			primero = primero.sig;
+			
+			if (ultimo == rec)
+				ultimo = null;
 			return rec.dato;
 		}
-		else
-		{
-			while(cont+1<pos)
-			{
-				rec=rec.sig;
-				sec=sec.sig;
+		else {
+			while (cont+1 < pos) {
+				rec = rec.sig;
+				sec = sec.sig;
 				cont++;
 			}
-			rec.sig=sec.sig;
-			if(ultimo==sec)
-				ultimo=rec;
+			rec.sig = sec.sig;
+			if (ultimo == sec)
+				ultimo = rec;
 			return sec.dato;
 		}
-		
 	}
-	
 	
 	public static void main(String[] args) throws Exception {
 		
-		int d=5;
-		int e=55;
-		Lista lis=new Lista();
+		int d = 5;
+		int e = 55;
+		Lista lis = new Lista();
 		lis.push_front(10);
 		lis.push_front(30);
 		lis.push_back(25);
@@ -296,7 +292,5 @@ public class Lista {
 		lis.mostrar();
 		lis.pop_front();
 		lis.mostrar();
-
 	}
-
 }

@@ -37,39 +37,30 @@ public class Monticulo {
 	}
 
 	public boolean esMonticuloVacio() {
-
 		return (tamUsado == 0);
 	}
 
 	private boolean esMonticuloLleno() {
-
 		return (tamUsado == vector.length - 1);
 	}
 
 	public void vaciarMonticulo() {
-
 		for (int i = 1; i < tamUsado; i++) {
-
 			vector[i] = null;
 		}
 		tamUsado = 0;
 	}
 
 	public Integer verPadre() {
-
 		if (tamUsado < 1) {
-
 			return null;
 		} else {
-
 			return vector[1];
 		}
 	}
 
 	private Integer padre(int i) {
-
 		if (tamUsado < i) {
-
 			return null;
 		}
 
@@ -78,9 +69,7 @@ public class Monticulo {
 	}
 
 	private boolean esNodoHoja(int pos) {
-
 		if (hijoIzquierda(pos) != null && hijoDerecha(pos) != null) {
-
 			return false;
 		}
 
@@ -98,11 +87,9 @@ public class Monticulo {
 		int i = tamUsado;
 		
 		while (i > 1 && vector[i / 2].intValue() < vector[i].intValue()) {
-
 			Integer aux = vector[i / 2];
 			vector[i / 2] = vector[i];
 			vector[i] = aux;
-
 			i = i / 2;
 		}
 	}
@@ -135,42 +122,32 @@ public class Monticulo {
 
 			// Si no tiene un hijo derecho solo cambia al izquierdo
 			if (der > tamUsado) {
-				
 				ladoACambiar = izq;
 			} else {
-
 				// En cambio si tiene dos hijos, se fija quien es el mayor para cambiar
 				if (vector[izq] >= vector[der]) {
-
 					ladoACambiar = izq;
 				} else {
-
 					ladoACambiar = der;
 				}
 			}
 
 			// Si el valor de la posicion actual es mayor al candidato se cambia
 			if (vector[i] < vector[ladoACambiar]) {
-
 				Integer aux = vector[i];
 				vector[i] = vector[ladoACambiar];
 				vector[ladoACambiar] = aux;
 				i = ladoACambiar;
-
 			}
 		}
-
 		return retorno;
 	}
 
 	public void mostrar() {
 
-		if (!esMonticuloVacio()) {
-
+		if (! esMonticuloVacio()) {
 			int i = 1;
-
 			while (i <= tamUsado) {
-
 				System.out.println(i + ": " + vector[i]);
 				i++;
 			}
