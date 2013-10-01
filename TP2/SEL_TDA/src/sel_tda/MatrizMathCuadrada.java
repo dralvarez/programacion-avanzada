@@ -1,10 +1,11 @@
 package sel_tda;
+import java.lang.Math;
 
 public class MatrizMathCuadrada extends MatrizMath{
 
-	private static final int CANTIDAD_FILAS_DEFAULT = 3;
+	private static final int CANTIDAD_FILAS_DEFAULT = 20;
 	
-	private static final int CANTIDAD_COLUMNAS_DEFAULT = 3;
+	private static final int CANTIDAD_COLUMNAS_DEFAULT = 20;
 	
 	
 	public MatrizMathCuadrada() {
@@ -47,6 +48,62 @@ public class MatrizMathCuadrada extends MatrizMath{
 		return this.getCantidadFilas();
 	}
 	
+	public int maximo(int valor1, int valor2) {
+		if (valor1 > valor2) return valor1;
+		else return valor2;
+	}
+	
+	public void intercambiar_filas(double fila1, double fila2) {
+		
+	}
+	
+	/* for k = 1 ... m:
+   Find pivot for column k:
+   i_max  := argmax (i = k ... m, abs(A[i, k]))
+   if A[i_max, k] = 0
+     error "Matrix is singular!"
+   swap rows(k, i_max)
+   Do for all rows below pivot:
+    for i = k + 1 ... m:
+     Do for all remaining elements in current row:
+      for j = k ... n:
+       A[i, j]  := A[i, j] - A[k, j] * (A[i, k] / A[k, k])
+     Fill lower triangular matrix with zeros:
+     A[i, k]  := 0
+*/
+	/*
+	public MatrizMathCuadrada inversa() {
+		int i_max = 0;
+				
+		if(determinante() != 0)
+		{	
+			int n = getDimension();
+			MatrizMathCuadrada matInd = new MatrizMathCuadrada(this);
+			
+			for (int k = 0; k < n; k++) {
+				//buscar pivot para la columna k
+				//i_max = maximo(k, (int)Math.abs(matInd.matriz[k][k])); //NOSE QUE SIGNIFICA ESTA LINEA DE PSEUDOCODIGO i_max  := argmax (i = k ... m, abs(A[i, k]))
+				if (matInd.matriz[i_max][n] == 0)
+					intercambiar_filas(n, i_max);
+			
+			
+				for (int i = k + 1; i < n; i++) {
+					for (int j = k; j < n; j++) {
+						matInd.matriz[i][j] = matInd.matriz[i][j] - matInd.matriz[k][j] * (matInd.matriz[i][k] / matInd.matriz[k][k]);
+					}
+		
+					matInd.matriz[i][k] = 0;
+			    }
+			}
+				
+			return matInd;
+		}
+		return null;
+		
+	}
+*/
+
+
 	public MatrizMathCuadrada inversa() 
 	{
 		if(determinante() != 0)
@@ -95,7 +152,7 @@ public class MatrizMathCuadrada extends MatrizMath{
 	
 	public static void main(String[] args) throws Exception {
 
-		MatrizMathCuadrada m = new MatrizMathCuadrada(2);
+	/*	MatrizMathCuadrada m = new MatrizMathCuadrada(2);
 		m.setValue(0,0,2);
 		m.setValue(0,1,1);
 		m.setValue(1,0,5);
@@ -117,16 +174,11 @@ public class MatrizMathCuadrada extends MatrizMath{
 		mi.setValue(1,0,3);
 		mi.setValue(1,1,4);
 		System.out.println(mi);
-		
-		MatrizMathCuadrada inversa = mi.inversa();
-		System.out.println("La inversa de ");
-		System.out.println(mi); 
-		System.out.println(" es: ");
-		System.out.println(inversa);
+		System.out.println(mi.inversa());
 		
 		double error = mi.errorCometido();
 		System.out.println("error" + error);
-
+*/
 	}
 	
 }
