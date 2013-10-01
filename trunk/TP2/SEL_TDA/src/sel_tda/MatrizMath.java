@@ -12,7 +12,7 @@ public class MatrizMath implements Cloneable{
 	
 	private int cantidadColumnas;
 	
-	private double matriz[][];
+	protected double matriz[][];
 	
 	public MatrizMath() {
 		this(CANTIDAD_FILAS_DEFAULT, CANTIDAD_COLUMNAS_DEFAULT);
