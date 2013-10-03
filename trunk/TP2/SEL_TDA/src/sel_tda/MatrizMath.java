@@ -138,7 +138,7 @@ public class MatrizMath implements Cloneable{
 		MatrizMath r = new MatrizMath(matriz1.cantidadFilas, matriz2.cantidadColumnas);
 
 	        for(int i = 0; i < matriz1.cantidadFilas; i++)
-	            for (int j = 0; j < matriz1.cantidadColumnas; j++)
+	            for (int j = 0; j < matriz2.cantidadColumnas; j++)
 	                for (int k = 0; k < matriz1.cantidadColumnas; k++)
 	                    r.matriz[i][j] += matriz1.matriz[i][k] * matriz2.matriz[k][j];
 
