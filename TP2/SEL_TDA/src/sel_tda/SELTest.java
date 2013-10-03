@@ -31,7 +31,9 @@ public class SELTest {
 	private void test(String path){
 		long inicio = System.currentTimeMillis();
 		//String fullPath = "pruebas/sel_test/" + path;
-		String fullPath = "C:/Users/Daiana/Desktop/programacion-avanzada/TP2/SEL_TDA/pruebas/sel_test/" + path;
+		//String fullPath = "C:/Users/Daiana/Desktop/programacion-avanzada/TP2/SEL_TDA/pruebas/sel_test/" + path;
+		String fullPath = "C:/Users/dwilson/Desktop/programacion-avanzada/TP2/SEL_TDA/pruebas/sel_test/" + path;
+		
 		System.out.println("Inicio Prueba: " + path);
 		
 		SEL sel = new SEL(fullPath);
@@ -63,6 +65,8 @@ public class SELTest {
 //		tester.test("3x3.in");
 //		tester.test("5x5.in");
 //		tester.test("10x10.in");
+		tester.test("14x14.in");
+//		tester.test("15x15.in");
 //		tester.test("20x20.in");
 //		tester.test("30x30.in");
 //		tester.test("100x100.in");

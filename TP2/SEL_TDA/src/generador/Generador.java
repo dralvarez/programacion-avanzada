@@ -8,13 +8,13 @@ public class Generador {
 
 	public static void main(String[] args) {
 	
-		int n = 20; //dimensión
+		int n = 14; //dimensión
 		FileWriter fichero = null;
         PrintWriter pw = null;
        
         try
         {
-            fichero = new FileWriter("sel.in");
+            fichero = new FileWriter("14x14.in");
             pw = new PrintWriter(fichero);
             
             pw.println(n); //La primer linea del archivo .in es la dimensión
