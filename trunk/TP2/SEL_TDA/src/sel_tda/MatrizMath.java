@@ -8,9 +8,9 @@ public class MatrizMath implements Cloneable{
 	
 	private static final int CANTIDAD_COLUMNAS_DEFAULT = 3;
 
-	private int cantidadFilas; 
+	protected int cantidadFilas; 
 	
-	private int cantidadColumnas;
+	protected int cantidadColumnas;
 	
 	protected double matriz[][];
 	
