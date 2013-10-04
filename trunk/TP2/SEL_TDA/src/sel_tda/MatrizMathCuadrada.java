@@ -48,90 +48,43 @@ public class MatrizMathCuadrada extends MatrizMath{
 		return this.getCantidadFilas();
 	}
 	
-// NO ANDA
-	
-	/* for k = 1 ... m:
-   Find pivot for column k:
-   i_max  := argmax (i = k ... m, abs(A[i, k]))
-   if A[i_max, k] = 0
-     error "Matrix is singular!"
-   swap rows(k, i_max)
-   Do for all rows below pivot:
-    for i = k + 1 ... m:
-     Do for all remaining elements in current row:
-      for j = k ... n:
-       A[i, j]  := A[i, j] - A[k, j] * (A[i, k] / A[k, k])
-     Fill lower triangular matrix with zeros:
-     A[i, k]  := 0
-*/
-	/*
-	public MatrizMathCuadrada inversa() {
-		int i_max = 0;
-				
-		if(determinante() != 0)
-		{	
-			int n = getDimension();
-			MatrizMathCuadrada matInd = new MatrizMathCuadrada(n);
-			
-			for (int k = 0; k < n; k++) {
-				//buscar pivot para la columna k
-				//i_max = maximo(k, (int)Math.abs(matInd.matriz[k][k])); //NOSE QUE SIGNIFICA ESTA LINEA DE PSEUDOCODIGO i_max  := argmax (i = k ... m, abs(A[i, k]))
-				if (matInd.matriz[i_max][n] == 0) System.out.println();
-					//intercambiar_filas(n, i_max);
-			
-				for (int i = k + 1; i < n; i++) {
-					for (int j = k; j < n; j++) {
-						matInd.matriz[i][j] = matInd.matriz[i][j] - matInd.matriz[k][j] * (matInd.matriz[i][k] / matInd.matriz[k][k]);
-					}
-					matInd.matriz[i][k] = 0;
-			    }
-			}
-			return matInd;
-		}
-		return null;
-	}
-*/
-
 //NO RESUELVE TODOS LOS CASOS DE PRUEBA PERO RESUELVE DIMENSIONES GRANDES
 
-	public MatrizMathCuadrada inversa() 
-	{
-		if(determinante() != 0)
-		{	
-			int n = getDimension();
-			MatrizMathCuadrada matInd = new MatrizMathCuadrada(this);
-			MatrizMathCuadrada matIde = MatrizMathCuadrada.identidad(n);
-			MatrizMathCuadrada matUni = new MatrizMathCuadrada(n);
-			
-			// transformación de la matriz y de los términos independientes
-			for (int k = 0; k < n - 1; k++) 
-			{
-				for (int i = k + 1; i < n; i++) 
-				{
-					//independientes
-					for (int s = 0; s < n; s++) 
-						matIde.getMatriz()[i][s] -= (matInd.getMatriz()[i][k] * matIde.getMatriz()[k][s]) / matInd.getMatriz()[k][k];
-					//elementos matriz
-					for (int j = k + 1; j < n; j++) 
-						matInd.getMatriz()[i][j] -= (matInd.getMatriz()[i][k] * matInd.getMatriz()[k][j]) / matInd.getMatriz()[k][k];
-				}
-			}
-			// cálculo de las incógnitas, elementos de la matriz inversa
-			for (int s = 0; s < n; s++) 
-			{
-				matUni.getMatriz()[n - 1][s] = matIde.getMatriz()[n - 1][s] / matInd.getMatriz()[n - 1][n - 1];
-				for (int i = n - 2; i >= 0; i--) 
-				{
-					matUni.getMatriz()[i][s] = matIde.getMatriz()[i][s] / matInd.getMatriz()[i][i];
-					for (int k = n - 1; k > i; k--)
-						matUni.getMatriz()[i][s] -= (matInd.getMatriz()[i][k] * matUni.getMatriz()[k][s]) / matInd.getMatriz()[i][i];
-				}
-			}
-			return matUni;
-		}
+	public MatrizMathCuadrada inversa() {
+		MatrizMathCuadrada Ainv = new MatrizMathCuadrada(getDimension());
+		Ainv = this.clone();
 		
-		return null;
-	}
+        int n = cantidadColumnas;
+        int k, 
+        	j, 
+        	i;
+
+        for (i = 0; i < n; i++)
+            for (j = 0; j < n; j++)
+                Ainv.matriz[i][j] = matriz[i][j];
+
+        for (k = 0; k < n; k++) {
+            for (i = 0; i < n; i++) {
+                for (j = 0; j < n; j++) {
+                    if ((i != k) && (j != k))
+                        Ainv.matriz[i][j] -= (Ainv.matriz[i][k] * Ainv.matriz[k][j]) / Ainv.matriz[k][k];
+                }
+
+           		for (j = 0; j < n; j++) {
+           			if (j != k)
+           				Ainv.matriz[k][j] = -Ainv.matriz[k][j] / Ainv.matriz[k][k];
+           		}
+
+	            for (i = 0; i < n; i++) {
+	                if (i != k)
+	                    Ainv.matriz[i][k] = Ainv.matriz[i][k] / Ainv.matriz[k][k];
+	            }
+	        Ainv.matriz[k][k] = 1 / Ainv.matriz[k][k];
+            }
+        }
+    return Ainv;
+  }
+	
 
 /*
 //	RESUELVE LOS CASOS DE PRUEBA PERO HASTA DIMENSION 10
