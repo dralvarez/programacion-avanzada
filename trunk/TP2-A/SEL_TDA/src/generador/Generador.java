@@ -92,7 +92,7 @@ public class Generador {
 
 	public static void main(String[] args) {
 		Generador gen = new Generador();
-		gen.GenerarArchivosInput("SEL_TDA/src/generador/Dimensiones.txt");
+		gen.GenerarArchivosInput("SEL_TDA/src/generador/Archivos.txt");
 		System.out.println("Se han generado los archivos de input correctamente.");
 	}
 }
