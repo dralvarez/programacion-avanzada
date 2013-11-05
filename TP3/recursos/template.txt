@@ -1,0 +1,14 @@
+N  : cantidad de nodos
+CA : Cantidad de aristas
+P  : Porcentaje de adyacencia
+GMM: Grado maximo
+GM : Grado minimo
+Ai : aristas
+
+N CA P GMM GM
+A1
+A2
+A3
+A4
+
+
