@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import progra.grupo1.modelo.Adyacencia;
 import progra.grupo1.modelo.Grafo;
-import progra.grupo1.modelo.Nodo;
 
-public class GeneradorGrafosAleatorios {
+public class GeneradorGrafosAleatoriosPorPorcentajeAdyacencia {
 	
 	private static final int CANTIDAD_NODOS_DEFAULT = 500;
 	
@@ -33,10 +33,10 @@ public class GeneradorGrafosAleatorios {
 	private List<Adyacencia> generarAdyacencias(int cantidadNodos) {
 		List<Adyacencia> listaAdyacencias = new ArrayList<Adyacencia>(cantidadNodos);
 		
-		for(int i=0; i<cantidadNodos-1; i++){
-			for(int j=i+1; j< cantidadNodos-1;j++){
-				
-				listaAdyacencias.add(new Adyacencia(i,j));
+		for(int i=0; i < cantidadNodos; i++){
+			for(int j=0; j < cantidadNodos ;j++){
+				if(i != j)
+					listaAdyacencias.add(new Adyacencia(i,j));
 			}
 		}
 		
@@ -54,40 +54,9 @@ public class GeneradorGrafosAleatorios {
 		return (int) (calcularCantidadTotalDeAristas(cantidadNodos) * porcentajeAdyacencia);
 	}
 
-	class Adyacencia implements Comparable<Adyacencia>{
-		
-		private int indice1;
-		private int indice2;
-		private double orden;
-		
-		public Adyacencia(int indice1, int indice2){
-			this.indice1 = indice1;
-			this.indice2 = indice2;
-			orden = Math.random();
-		}
-
-		public int getIndice1() {
-			return indice1;
-		}
-
-		public int getIndice2() {
-			return indice2;
-		}
-
-		public double getOrden() {
-			return orden;
-		}
-
-		@Override
-		public int compareTo(Adyacencia o) {
-			return this.orden > o.orden ? 1 : -1;
-		}
-		
-	}
-	
 	public static void main(String[] args) {
-		GeneradorGrafosAleatorios gga = new GeneradorGrafosAleatorios();
-		Grafo grafo = gga.generar(200, 0.5);
+		GeneradorGrafosAleatoriosPorPorcentajeAdyacencia gga = new GeneradorGrafosAleatoriosPorPorcentajeAdyacencia();
+		Grafo grafo = gga.generar(5, 0.5);
 		
 		System.out.println(grafo);
 	}

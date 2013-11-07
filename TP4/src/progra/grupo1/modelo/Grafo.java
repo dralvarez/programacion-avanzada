@@ -7,8 +7,22 @@ public class Grafo {
 	private MatrizSimetrica<Boolean> matrizAdyacencia;
 
 	public Grafo(int cantidadNodos){
-		nodos = new Nodo[cantidadNodos];
+		nodos = generarNodos(cantidadNodos);
 		matrizAdyacencia = new MatrizSimetrica<Boolean>(cantidadNodos);
+	}
+	
+	protected Nodo[] generarNodos(int cantidadNodos) {
+		Nodo[] nodos = new Nodo[cantidadNodos];
+		for(int i=0 ; i<cantidadNodos; i++){
+			Nodo nodo = new Nodo(i);
+			nodo.setGrafo(this);
+			nodos[i] = nodo;
+		}
+		return nodos;
+	}
+
+	public void addAdyacencia(Adyacencia adyacencia){
+		this.addAdyacencia(adyacencia.getIndice1(), adyacencia.getIndice2());
 	}
 	
 	public void addAdyacencia(Nodo nodo1, Nodo nodo2){
@@ -37,13 +51,20 @@ public class Grafo {
 
 		StringBuilder b = new StringBuilder();
 		
-		b.append("Cantidad de nodos: " + cantidadNodos);
-		b.append("|| Aristas: " + this.matrizAdyacencia);
+		for(int i=0; i<cantidadNodos; i++){
+			Nodo n = this.getNodo(i);
+			
+			b.append(n + ", ");
+			
+			
+		}
 		
-		for(int i=0; i<cantidadNodos-1; i++){
-			for(int j=i+1; j< cantidadNodos-1;j++){
-				if(matrizAdyacencia.get(i, j)){
-					b.append("i j");
+		for(int i=0; i<cantidadNodos; i++){
+			for(int j=1; j<cantidadNodos;j++){
+				
+				boolean sonAdyacentes = matrizAdyacencia.get(i, j);
+				if(i != j && sonAdyacentes){
+					b.append(String.format("(%d,%d), ", i, j));
 				}
 			}
 		}
@@ -53,6 +74,30 @@ public class Grafo {
 
 	public int getCantidadNodos() {
 		return this.nodos.length;
+	}
+
+	public int getCantidadAdyacencias(){
+		int cantidad = 0;
+		int dimension = matrizAdyacencia.getDimension();
+		
+		for(int i=0 ; i < dimension ; i++){
+			if(!matrizAdyacencia.getVectorEquivalente()[i]){
+				cantidad++;
+			}
+		}
+		return cantidad;
+	}
+	
+	public double getPorcentajeAdyacencia(){
+		double dimension = this.getMaximaCantidadDeAristasPosibles();
+		double cantidadAdyacencias = this.getCantidadAdyacencias();
+		
+		return cantidadAdyacencias / dimension;
+	}
+	
+	public double getMaximaCantidadDeAristasPosibles(){
+		int cantidadNodos = getCantidadNodos();
+		return cantidadNodos * (cantidadNodos - 1) / 2;
 	}
 	
 }
