@@ -7,6 +7,10 @@ public class Nodo {
 	private int indice;
 
 	private Grafo grafo;
+	
+	public Nodo(int indice){
+		this.indice = indice;
+	}
 
 	public String getColor() {
 		return color;
@@ -34,5 +38,10 @@ public class Nodo {
 
 	public boolean esAdyacente(Nodo nodo) {
 		return this.grafo.sonAdyacentes(this, nodo);
+	}
+	
+	@Override
+	public String toString() {
+		return String.format("Nodo %d: | Color %s", indice, color); 
 	}
 }

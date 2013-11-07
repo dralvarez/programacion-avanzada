@@ -2,38 +2,43 @@ package progra.grupo1.modelo;
 
 public class MatrizSimetrica<T> {
 
-	private T[] vectorEquivalente;
-	private int dimension;
+	private final boolean[] vectorEquivalente;
+	private final int cantidadNodos;
 	
 	@SuppressWarnings("unchecked")
-	public MatrizSimetrica(int dimension){
-		this.dimension = dimension;
-		vectorEquivalente = (T[]) new Object[calcularDimensionVector(dimension)];
+	public MatrizSimetrica(int cantidadNodos){
+		this.cantidadNodos = cantidadNodos;
+		vectorEquivalente = new boolean[ calcularDimensionVector(cantidadNodos) ];
 	}
 	
 	private int calcularDimensionVector(int dimensionMatriz) {
-		return (int) ((Math.pow(dimensionMatriz, 2) - dimensionMatriz) / 2);
+		return (int) ((Math.pow(cantidadNodos, 2) - cantidadNodos) / 2);
 	}
 
-	public T get(int i, int j) {
+	public boolean get(int i, int j) {
 		int posicion = calcularPosicion(i,j);
 		return vectorEquivalente[posicion];
 	}
 	
-	public void put(int i, int j, T object) {
+	public void put(int i, int j, Boolean object) {
 		int posicion = calcularPosicion(i,j);
 		vectorEquivalente[posicion] = object;
 	}
 
 
 	protected int calcularPosicion(int i, int j) {
-		int dimension = this.getDimension();		
-		return (int) (i*dimension + j - (Math.pow(i, 2) + 3*i + 2)/2);
+		int cantidadNodos = this.getCantidadNodos();
+		if(i > j){
+			return (int) (i*cantidadNodos + j - (Math.pow(i, 2) + 3*i + 2)/2);
+		} else {
+			return (int) (j*cantidadNodos + i - (Math.pow(j, 2) + 3*j + 2)/2);
+		}
 	}
 
-	private int getDimension() {
+	public int getDimension() {
 		return vectorEquivalente.length;
 	}
+	
 	
 	@Override
 	public String toString() {
@@ -44,8 +49,16 @@ public class MatrizSimetrica<T> {
 		}
 		
 		return b.toString();
-		
-		
 	}
+	
+	public int getCantidadNodos() {
+		return cantidadNodos;
+	}
+	
+	public boolean[] getVectorEquivalente(){
+		return vectorEquivalente;
+	}
+	
+	
 	
 }
