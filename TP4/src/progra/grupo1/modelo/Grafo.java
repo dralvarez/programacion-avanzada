@@ -13,8 +13,10 @@ public class Grafo {
 	
 	protected Nodo[] generarNodos(int cantidadNodos) {
 		Nodo[] nodos = new Nodo[cantidadNodos];
+		int grado = 0;
 		for(int i=0 ; i<cantidadNodos; i++){
 			Nodo nodo = new Nodo(i);
+			nodo.setGrado(grado);
 			nodo.setGrafo(this);
 			nodos[i] = nodo;
 		}
@@ -98,6 +100,24 @@ public class Grafo {
 	public double getMaximaCantidadDeAristasPosibles(){
 		int cantidadNodos = getCantidadNodos();
 		return cantidadNodos * (cantidadNodos - 1) / 2;
+	}
+	
+	public int getGradoNodo(int indice) {
+		return this.nodos[indice].getGrado();
+	}
+	
+	public double getPorcentajeAdyacenciaRegulares(int grado){
+		return grado * 100 / (getCantidadNodos() - 1);
+	}
+	
+	public int getGradoSegunPorcentajeAdyacenciaRegulares(double porcentajeAdyacencia){
+		return (int) porcentajeAdyacencia * (getCantidadNodos() - 1);
+	}
+	
+	public double getCantidadAdyacenciasRegulares(int grado){
+		int cantidadNodos = getCantidadNodos();
+	 //todos los nodos tienen igual grado en los grafos regulares
+		return cantidadNodos * grado / 2;
 	}
 	
 }
