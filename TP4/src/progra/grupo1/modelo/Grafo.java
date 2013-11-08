@@ -1,8 +1,11 @@
 package progra.grupo1.modelo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Grafo {
 
-	private Nodo[] nodos;
+	private List<Nodo> nodos;
 	
 	private MatrizSimetrica<Boolean> matrizAdyacencia;
 
@@ -11,12 +14,12 @@ public class Grafo {
 		matrizAdyacencia = new MatrizSimetrica<Boolean>(cantidadNodos);
 	}
 	
-	protected Nodo[] generarNodos(int cantidadNodos) {
-		Nodo[] nodos = new Nodo[cantidadNodos];
+	protected List<Nodo> generarNodos(int cantidadNodos) {
+		List<Nodo> nodos = new ArrayList<Nodo>(cantidadNodos);
 		for(int i=0 ; i<cantidadNodos; i++){
 			Nodo nodo = new Nodo(i);
 			nodo.setGrafo(this);
-			nodos[i] = nodo;
+			nodos.add(nodo);
 		}
 		return nodos;
 	}
@@ -42,7 +45,7 @@ public class Grafo {
 	}
 	
 	public Nodo getNodo(int indice){
-		return nodos[indice];
+		return nodos.get(indice);
 	}
 	
 	@Override
@@ -71,9 +74,13 @@ public class Grafo {
 		
 		return b.toString();
 	}
+	
+	public List<Nodo> getNodos() {
+		return nodos;
+	}
 
 	public int getCantidadNodos() {
-		return this.nodos.length;
+		return this.nodos.size();
 	}
 
 	public int getCantidadAdyacencias(){
@@ -101,7 +108,7 @@ public class Grafo {
 	}
 	
 	public int getGradoNodo(int indice) {
-		return this.nodos[indice].getGrado();
+		return this.nodos.get(indice).getGrado();
 	}
 	
 	public double getPorcentajeAdyacenciaRegulares(int grado){
