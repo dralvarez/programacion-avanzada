@@ -6,6 +6,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import progra.grupo1.generador.GeneradorGrafosAleatoriosPorPorcentajeAdyacencia;
+import progra.grupo1.generador.GeneradorGrafosAleatoriosPorProbabilidad;
 import progra.grupo1.modelo.Grafo;
 import progra.grupo1.modelo.Nodo;
 import progra.grupo1.proceso.estrategia.MatulaComparator;
@@ -77,11 +78,12 @@ public class ColoreadorGrafos {
 	public static void main(String[] args) {
 		ColoreadorGrafos coloreador = new ColoreadorGrafos();
 		
-		GeneradorGrafosAleatoriosPorPorcentajeAdyacencia gga = new GeneradorGrafosAleatoriosPorPorcentajeAdyacencia();
-		Grafo grafo = gga.generar(5, 0.5);
+		GeneradorGrafosAleatoriosPorProbabilidad gga = new GeneradorGrafosAleatoriosPorProbabilidad();
+		Grafo grafo = gga.generar(1000, 0.5);
 		
 		coloreador.colorear(grafo);		
 		System.out.println(grafo);
+		System.out.println("Numero cromatico: " + grafo.getNumeroCromatico());
 		
 	}
 }
