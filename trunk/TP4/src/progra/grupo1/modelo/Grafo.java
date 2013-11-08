@@ -13,10 +13,8 @@ public class Grafo {
 	
 	protected Nodo[] generarNodos(int cantidadNodos) {
 		Nodo[] nodos = new Nodo[cantidadNodos];
-		int grado = 0;
 		for(int i=0 ; i<cantidadNodos; i++){
 			Nodo nodo = new Nodo(i);
-			nodo.setGrado(grado);
 			nodo.setGrafo(this);
 			nodos[i] = nodo;
 		}

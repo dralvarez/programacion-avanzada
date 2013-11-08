@@ -13,6 +13,7 @@ public class Nodo {
 
 	public Nodo(int indice){
 		this.indice = indice;
+		this.grado = 0;
 	}
 
 	public String getColor() {

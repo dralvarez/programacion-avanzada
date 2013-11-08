@@ -25,13 +25,16 @@ public class MatrizSimetrica<T> {
 		vectorEquivalente[posicion] = object;
 	}
 
-
+	/**
+	 * TODO: Chequear si realmente funciona bien, el if esta para 
+	 * @return
+	 */
 	protected int calcularPosicion(int i, int j) {
 		int cantidadNodos = this.getCantidadNodos();
 		if(i > j){
-			return (int) (i*cantidadNodos + j - (Math.pow(i, 2) + 3*i + 2)/2);
-		} else {
 			return (int) (j*cantidadNodos + i - (Math.pow(j, 2) + 3*j + 2)/2);
+		} else {
+			return (int) (i*cantidadNodos + j - (Math.pow(i, 2) + 3*i + 2)/2);
 		}
 	}
 
