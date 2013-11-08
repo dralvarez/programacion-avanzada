@@ -1,7 +1,11 @@
 package progra.grupo1.modelo;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class Grafo {
 
@@ -123,6 +127,16 @@ public class Grafo {
 		int cantidadNodos = getCantidadNodos();
 	 //todos los nodos tienen igual grado en los grafos regulares
 		return cantidadNodos * grado / 2;
+	}
+	
+	public int getNumeroCromatico(){
+		Set<String> colores = new HashSet<String>();
+		
+		for(Nodo n : nodos){
+			colores.add(n.getColor());
+		}
+		
+		return colores.size();
 	}
 	
 }
