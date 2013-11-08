@@ -17,10 +17,15 @@ public class ColoreadorGrafos {
 		
 		while(cantidadNodosPintados < cantidadNodos){
 			
+			String color = provider.getColor(indiceColores);
+
 			for(int i=0 ; i<cantidadNodos; i++){
 				
 				Nodo nodo = grafo.getNodo(i);
-				String color = provider.getColor(indiceColores);
+				
+				if(nodo.getColor() != null){
+					continue;
+				}
 				
 				boolean sePuedePintar = true;
 				
