@@ -38,6 +38,8 @@ public class Grafo {
 	
 	public void addAdyacencia(int indice1, int indice2){
 		matrizAdyacencia.put(indice1, indice2, Boolean.TRUE);
+		this.getNodo(indice1).agregarGrado();
+		this.getNodo(indice2).agregarGrado();
 	}
 	
 	public boolean sonAdyacentes(Nodo nodo1, Nodo nodo2){
@@ -60,10 +62,7 @@ public class Grafo {
 		
 		for(int i=0; i<cantidadNodos; i++){
 			Nodo n = this.getNodo(i);
-			
 			b.append(n + ", ");
-			
-			
 		}
 		
 		for(int i=0; i<cantidadNodos; i++){
@@ -139,4 +138,26 @@ public class Grafo {
 		return colores.size();
 	}
 	
+	public String toStringGradosYNodos(){
+		StringBuilder b = new StringBuilder();
+		for(Nodo n : nodos){
+			String format = String.format("N%dG%d | ", n.getIndice(),n.getGrado());
+			b.append(format);
+		}
+		
+		return b.toString();
+	}
+	
+	public boolean chequearSiEsRegularDeGrado(int grado){
+		boolean esValido = true;
+		
+		for(Nodo n : nodos){
+			if(n.getGrado() != grado){
+				esValido = false;
+				break;
+			}
+		}
+
+		return esValido;
+	}
 }
