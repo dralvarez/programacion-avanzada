@@ -40,6 +40,10 @@ public class Nodo {
 		this.grado = grado;
 	}
 	
+	public void agregarGrado(){
+		this.grado++;
+	}
+	
 	public Grafo getGrafo() {
 		return grafo;
 	}
