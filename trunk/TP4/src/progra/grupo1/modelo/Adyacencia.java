@@ -5,11 +5,13 @@ public	class Adyacencia implements Comparable<Adyacencia>{
 	private int indice1;
 	private int indice2;
 	private double orden;
+	private int distancia;
 	
 	public Adyacencia(int indice1, int indice2){
 		this.indice1 = indice1;
 		this.indice2 = indice2;
 		orden = Math.random();
+		distancia = (int) (Math.random() * 100); 
 	}
 
 	public int getIndice1() {
@@ -22,6 +24,10 @@ public	class Adyacencia implements Comparable<Adyacencia>{
 
 	public double getOrden() {
 		return orden;
+	}
+	
+	public int getDistancia() {
+		return distancia;
 	}
 
 	@Override
