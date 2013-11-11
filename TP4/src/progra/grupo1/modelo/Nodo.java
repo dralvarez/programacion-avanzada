@@ -1,6 +1,6 @@
 package progra.grupo1.modelo;
 
-public class Nodo {
+public class Nodo implements Indexable{
 
 	private String color;
 
