@@ -24,7 +24,7 @@ public class GeneradorGrafosAleatoriosPorPorcentajeAdyacencia {
 
 		for(int i=0 ; i< cantidadDeAristas ; i++){
 			Adyacencia adyacencia = adyacenciasGeneradas.get(i);
-			g.addAdyacencia(adyacencia.getIndice1(), adyacencia.getIndice2());
+			g.addAdyacencia(adyacencia);
 		}
 		
 		return g;

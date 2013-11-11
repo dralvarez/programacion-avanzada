@@ -1,21 +1,19 @@
 package progra.grupo1.modelo;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 public class Grafo {
 
 	private List<Nodo> nodos;
 	
-	private MatrizSimetrica<Boolean> matrizAdyacencia;
+	private MatrizSimetrica matrizAdyacencia;
 
 	public Grafo(int cantidadNodos){
 		nodos = generarNodos(cantidadNodos);
-		matrizAdyacencia = new MatrizSimetrica<Boolean>(cantidadNodos);
+		matrizAdyacencia = new MatrizSimetrica(cantidadNodos);
 	}
 	
 	protected List<Nodo> generarNodos(int cantidadNodos) {
@@ -29,20 +27,29 @@ public class Grafo {
 	}
 
 	public void addAdyacencia(Adyacencia adyacencia){
-		this.addAdyacencia(adyacencia.getIndice1(), adyacencia.getIndice2());
+		this.addAdyacencia(adyacencia.getIndice1(), adyacencia.getIndice2(), adyacencia);
 	}
 	
 	public void addAdyacencia(Nodo nodo1, Nodo nodo2){
-		this.addAdyacencia(nodo1.getIndice(), nodo2.getIndice());
+		Adyacencia adyacencia = new Adyacencia(nodo1.getIndice(), nodo2.getIndice());
+		this.addAdyacencia(adyacencia);
 	}
 	
-	public void addAdyacencia(int indice1, int indice2){
-		matrizAdyacencia.put(indice1, indice2, Boolean.TRUE);
+	private void addAdyacencia(int indice1, int indice2, Adyacencia adyacencia){
+		matrizAdyacencia.put(indice1, indice2, adyacencia);
 		this.getNodo(indice1).agregarGrado();
 		this.getNodo(indice2).agregarGrado();
 	}
 	
+	public boolean sonAdyacentes(int indice1, int indice2){
+		return indice1 != indice2 ? matrizAdyacencia.get(indice1, indice2) != null : false;
+	}
+	
 	public boolean sonAdyacentes(Nodo nodo1, Nodo nodo2){
+		return sonAdyacentes(nodo1.getIndice(), nodo2.getIndice());
+	}
+	
+	public Adyacencia getAdyacencia(Nodo nodo1, Nodo nodo2){
 		return matrizAdyacencia.get(nodo1.getIndice(), nodo2.getIndice());
 	}
 	
@@ -68,8 +75,7 @@ public class Grafo {
 		for(int i=0; i<cantidadNodos; i++){
 			for(int j=1; j<cantidadNodos;j++){
 				
-				boolean sonAdyacentes = matrizAdyacencia.get(i, j);
-				if(i != j && sonAdyacentes){
+				if(i != j && sonAdyacentes(i, j)){
 					b.append(String.format("(%d,%d), ", i, j));
 				}
 			}
@@ -91,7 +97,7 @@ public class Grafo {
 		int dimension = matrizAdyacencia.getDimension();
 		
 		for(int i=0 ; i < dimension ; i++){
-			if(!matrizAdyacencia.getVectorEquivalente()[i]){
+			if(matrizAdyacencia.getVectorEquivalente()[i] != null){
 				cantidad++;
 			}
 		}

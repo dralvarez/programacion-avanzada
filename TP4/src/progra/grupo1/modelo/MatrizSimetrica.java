@@ -1,27 +1,26 @@
 package progra.grupo1.modelo;
 
-public class MatrizSimetrica<T> {
+public class MatrizSimetrica {
 
-	private final boolean[] vectorEquivalente;
+	private final Adyacencia[] vectorEquivalente;
 	private final int cantidadNodos;
 	
-	@SuppressWarnings("unchecked")
 	public MatrizSimetrica(int cantidadNodos){
 		this.cantidadNodos = cantidadNodos;
-		vectorEquivalente = new boolean[ calcularDimensionVector(cantidadNodos) ];
+		vectorEquivalente = new Adyacencia[ calcularDimensionVector(cantidadNodos) ];
 	}
 	
 	private int calcularDimensionVector(int dimensionMatriz) {
 		return (int) ((Math.pow(cantidadNodos, 2) - cantidadNodos) / 2);
 	}
 
-	public boolean get(int i, int j) {
+	public Adyacencia get(int i, int j) {
 		int posicion = calcularPosicion(i,j);
 		return vectorEquivalente[posicion];
 	}
 	
-	public void put(int i, int j, Boolean object) {
-		int posicion = calcularPosicion(i,j);
+	public void put(int i, int j, Adyacencia object) {
+		int posicion = calcularPosicion(i,j);		
 		vectorEquivalente[posicion] = object;
 	}
 
@@ -58,7 +57,7 @@ public class MatrizSimetrica<T> {
 		return cantidadNodos;
 	}
 	
-	public boolean[] getVectorEquivalente(){
+	public Adyacencia[] getVectorEquivalente(){
 		return vectorEquivalente;
 	}
 	
