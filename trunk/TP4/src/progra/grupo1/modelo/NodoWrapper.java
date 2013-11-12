@@ -34,4 +34,9 @@ public class NodoWrapper implements Indexable, Priorizable {
 		return contenido;
 	}
 	
+	@Override
+	public String toString() {
+		return String.format("C[%s]-I[%d]-P[%d]", this.contenido, this.indice, this.prioridad);
+	}
+	
 }
