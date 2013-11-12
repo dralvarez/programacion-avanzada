@@ -1,0 +1,15 @@
+Densidad = D
+
+D=2*a/(n*(n-1)) siendo: a=aristas; n=nodos
+
+Conocido este dato podemos diferenciar los árboles entre:
+Denso si D es aproximadamente 1
+Disperso si D es aproximadamente 0
+
+En los casos en los que tengamos un grafo denso, nos convendrá usar el algoritmo de Prim.
+En los casos en los que tengamos un grafo disperso, nos convendrá usar el algoritmo de kruskal.
+--------------------------------------------------------------------------------------
+
+ Complejidad: 
+- Complejidad de Prim: O(n²)
+- Complejidad de Kruskal: O(a log a) [siendo a=lados]
