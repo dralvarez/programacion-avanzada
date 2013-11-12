@@ -53,7 +53,7 @@ public class DijkstraImpl {
 			}
 			nodosYaRevisados.add(nodoOrigen);
 		}
-		// Condicion de corte
+		// Condicion de corte, si todavia tengo mas nodos por revisar
 		if(!nodosAdyacentes.isEmpty()){
 			analizarDistancias(nodosAdyacentes, nodosYaRevisados, grafo, distancias);
 		}
