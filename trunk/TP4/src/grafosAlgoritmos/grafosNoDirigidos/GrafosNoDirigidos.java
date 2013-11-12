@@ -60,7 +60,7 @@ public class GrafosNoDirigidos {
 	}
 	
 	//******************************************************PRIM****************************************************************************
-	//Prim parte de un nodon y va añadiendo nodos cuyo peso sea mínimo, hasta pasar por todos los nodos.
+	//Prim parte de un nodo y va añadiendo nodos cuyo peso sea mínimo, hasta pasar por todos los nodos.
 	public void resolverPrim(){
 		int []v = new int[nodos];
 		int []u = new int[nodos];
@@ -190,7 +190,9 @@ public class GrafosNoDirigidos {
 	}
 	
 	public void ordenarDeMayAMen(int [][]mat, int fil){
-		int aux1, aux2, auxcosto;
+		int aux1, 
+			aux2, 
+			auxcosto;
 		for(int i = 1; i <= fil - 1; i++)
 			for(int j = 0; j <= fil-2; j++)
 				if(mat[j][2] > mat[j+1][2]){
@@ -206,7 +208,7 @@ public class GrafosNoDirigidos {
 				}
 	}
 	
-	//Kruskall ordena por el peso de las aristas y va eligiendo las de menor peso con dos premisas: no repetir nodos y sin hacer ningun bucle hasta el final.
+	//Kruskal ordena por el peso de las aristas y va eligiendo las de menor peso con dos premisas: no repetir nodos y sin hacer ningun bucle hasta el final.
 	public void resolverKruskal(int [][]mat, int fil){
 		int cantNodos = 0;
 		int [][]matSal = new int[nodos][3];
@@ -270,9 +272,11 @@ public class GrafosNoDirigidos {
 	
 	public static void main(String[] args) {
 
-		GrafosNoDirigidos gn = new GrafosNoDirigidos("src/grafosAlgoritmos/grafosNoDirigidos/prim.in");
+		//String archivo = "prim.in";
+		String archivo = "kruskal.in";
+		GrafosNoDirigidos gn = new GrafosNoDirigidos("src/grafosAlgoritmos/grafosNoDirigidos/" + archivo);
 		//gn.resolverPrim(); //FUNCIONA!
-		gn.Kruskal("src/grafosAlgoritmos/grafosNoDirigidos/kruskal.in"); //Averiguar si Prim y Kruskal dan el mismo resultado
+		gn.Kruskal("src/grafosAlgoritmos/grafosNoDirigidos/" + archivo);
 	}
 
 }
