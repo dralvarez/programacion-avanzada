@@ -2,7 +2,13 @@ package algoritmosGrafos.modeloAlternativo;
 
 import java.io.*;
 
- 
+ /*
+  * El algoritmo de Prim encuentra un árbol recubridor mínimo en un grafo conexo, no dirigido y cuyas aristas 
+  * están etiquetadas con pesos. El algoritmo encuentra un subconjunto de aristas que forman un árbol con todos los vértices, 
+  * donde el peso total de todas las aristas en el árbol es el mínimo posible. 
+  * Si el grafo no es conexo, entonces el algoritmo encuentra el árbol recubridor mínimo para uno de los componentes conexos 
+  * que forman dicho grafo no conexo.
+  */
 
 public class Prim {
 	private int cantNodos;
@@ -27,7 +33,6 @@ public class Prim {
 		
 		this.cantNodos = g.getCantNodos();
 		this.aristas = g.getAristas();
-		
 		this.ady = g.getAdy();
 		this.marcados = new int[g.getCantNodos()];
 		this.cadenaParaGuardar = new String[g.getCantNodos()];
@@ -37,7 +42,7 @@ public class Prim {
 	}
 	
 	public Prim(String PATHin) {
-
+		
 		this.cadenasGuardadas = 0;
 
 		File archivo = null;
@@ -92,7 +97,6 @@ public class Prim {
 				}
 	
 			}
-		
 		this.nombre[0] = '1';
 		this.nombre[1] = '2';
 		this.nombre[2] = '3';
@@ -147,7 +151,6 @@ public class Prim {
 					menor = this.ady[i][j];
 					desde = i;
 					hasta = j;
-
 				}
 			}
 		}
@@ -165,7 +168,7 @@ public class Prim {
 	public void mostrarResultado() {
 		for (int i = 0; i < this.cadenasGuardadas; i++)
 			System.out.println(this.cadenaParaGuardar[i]);
-		System.out.println(this.total);
+		System.out.println("Suma de pesos: " + this.total);
 	}
 
 	public static void main(String args[]) {
@@ -174,6 +177,5 @@ public class Prim {
 		Prim p = new Prim(g);
 		System.out.println("\n" + "Camino:");
 		p.mostrarResultado();
-		
 	}
 }
