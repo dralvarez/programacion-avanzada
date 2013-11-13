@@ -16,8 +16,6 @@ public class MonticuloTest {
 			m.push(prioridad, contenido);
 		}
 		
-//		System.out.println(m);
-		
 		System.out.println(m.deepToString());
 
 		List<Object> contenidos = new ArrayList<Object>(cantidadNodosInicial);

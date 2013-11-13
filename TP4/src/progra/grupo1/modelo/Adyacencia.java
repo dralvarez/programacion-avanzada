@@ -30,6 +30,10 @@ public	class Adyacencia implements Comparable<Adyacencia>{
 		return distancia;
 	}
 
+	public void setDistancia(int distancia) {
+		this.distancia = distancia;
+	}
+
 	@Override
 	public int compareTo(Adyacencia o) {
 		return (int) (this.orden*100 - o.orden*100);

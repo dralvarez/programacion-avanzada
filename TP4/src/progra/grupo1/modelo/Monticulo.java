@@ -113,7 +113,7 @@ public class Monticulo {
 		nodos.set(indicePadre, hijo);
 	}
 
-	private void swapPositionAscendente(NodoWrapper hijo, NodoWrapper padre) {
+	protected void swapPositionAscendente(NodoWrapper hijo, NodoWrapper padre) {
 		swapPosiciones(hijo, padre);
 
 		NodoWrapper nuevoPadre = this.getPadre(hijo);
@@ -163,7 +163,7 @@ public class Monticulo {
 		return b.toString();
 	}
 	
-	public int getCantidadNodos(){
+	protected int getCantidadNodos(){
 		return nodos.size();
 	}
 	
