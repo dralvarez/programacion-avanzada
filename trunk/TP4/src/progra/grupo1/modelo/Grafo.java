@@ -67,16 +67,17 @@ public class Grafo {
 
 		StringBuilder b = new StringBuilder();
 		
-		for(int i=0; i<cantidadNodos; i++){
-			Nodo n = this.getNodo(i);
-			b.append(n + ", ");
-		}
+//		for(int i=0; i<cantidadNodos; i++){
+//			Nodo n = this.getNodo(i);
+//			b.append(n + ", ");
+//		}
 		
 		for(int i=0; i<cantidadNodos; i++){
 			for(int j=1; j<cantidadNodos;j++){
 				
 				if(i != j && sonAdyacentes(i, j)){
-					b.append(String.format("(%d,%d), ", i, j));
+					Adyacencia adyacencia = this.matrizAdyacencia.get(i, j);
+					b.append(String.format("(%d,%d) = %d, ", i, j, adyacencia.getDistancia()));
 				}
 			}
 		}

@@ -15,11 +15,11 @@ public class DijkstraImpl {
 	public Map<Nodo, Integer> ejecutar(Grafo grafo, Nodo nodoInicial) {
 		Map<Nodo, Integer> distancias = crearMapaDeDistancias(grafo);
 		
-		List<Nodo> nodos = new ArrayList<Nodo>();
-		nodos.add(nodoInicial);
+		List<Nodo> nodosOrigen = new ArrayList<Nodo>();
+		nodosOrigen.add(nodoInicial);
 		distancias.put(nodoInicial, 0);
 		List<Nodo> nodosYaRevisados = new ArrayList<Nodo>();
-		analizarDistancias(nodos, nodosYaRevisados, grafo, distancias);
+		analizarDistancias(nodosOrigen, nodosYaRevisados, grafo, distancias);
 		
 		return distancias;
 	}	
@@ -32,6 +32,7 @@ public class DijkstraImpl {
 		
 		for(int i=0; i < nodosOrigen.size();i++){
 			Nodo nodoOrigen = nodosOrigen.get(i);
+			
 			for(int j=0; j < nodosDestino.size(); j++){
 				Nodo nodoDestino = nodosDestino.get(j);
 				
@@ -40,6 +41,7 @@ public class DijkstraImpl {
 					if(!nodosYaRevisados.contains(nodoDestino)){
 						nodosAdyacentes.add(nodoDestino);
 					}
+
 					Integer distanciaAlOrigen = distancias.get(nodoOrigen);
 					Integer distanciaAlDestino = distancias.get(nodoDestino);
 					Adyacencia adyacencia = grafo.getAdyacencia(nodoOrigen, nodoDestino);
