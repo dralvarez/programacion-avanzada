@@ -1,9 +1,12 @@
 package progra.grupo1.modelo;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import progra.grupo1.proceso.helper.NodoPorGradoComparator;
 
 public class Grafo {
 
@@ -182,6 +185,16 @@ public class Grafo {
 
 		return esValido;
 	}
+	
+	public int getGradoMinimo(){
+		Nodo nodoConMinimoGrado = Collections.min(this.getNodos(), new NodoPorGradoComparator());
+		return nodoConMinimoGrado.getGrado();
+	}
+	
+	public int getGradoMaximo(){
+		Nodo nodoConMaximoGrado = Collections.max(this.getNodos(), new NodoPorGradoComparator());
+		return nodoConMaximoGrado.getGrado();
+	}	
 	
 	
 }
