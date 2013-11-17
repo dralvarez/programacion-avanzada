@@ -9,7 +9,6 @@ import progra.grupo1.InterpreteArchivoGrafo;
 import progra.grupo1.generador.GeneradorGrafosAleatoriosPorPorcentajeAdyacencia;
 import progra.grupo1.modelo.Grafo;
 import progra.grupo1.modelo.Nodo;
-import progra.grupo1.proceso.estrategia.MatulaComparator;
 import progra.grupo1.proceso.estrategia.WelshPowellComparator;
 import progra.grupo1.proceso.helper.ColorProvider;
 import progra.grupo1.proceso.helper.VerificadorColoreador;
@@ -17,7 +16,8 @@ import progra.grupo1.proceso.helper.VerificadorColoreadorWelshPowell;
 
 public class ColoreadorGrafos {
 
-	private static final MatulaComparator DEFAULT_STRATEGY = new MatulaComparator();
+	private static final Comparator<Nodo> DEFAULT_STRATEGY = new WelshPowellComparator();
+	
 	ColorProvider provider = new ColorProvider();
 	
 	public void colorear(Grafo grafo, Comparator<Nodo> estrategiaOrden){
@@ -90,7 +90,7 @@ public class ColoreadorGrafos {
 		assert grafo.getCantidadAdyacencias() == 7;
 //		Grafo grafo = gga.generar(1000, 0.5);
 		
-		coloreador.colorear(grafo, new WelshPowellComparator());		
+		coloreador.colorear(grafo);		
 		System.out.println(grafo);
 		System.out.println("Colores: " + grafo.getColores());
 		System.out.println("Numero cromatico: " + grafo.getNumeroCromatico());

@@ -1,9 +1,5 @@
 package progra.grupo1.generador;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import progra.grupo1.modelo.Adyacencia;
 import progra.grupo1.modelo.Grafo;
 

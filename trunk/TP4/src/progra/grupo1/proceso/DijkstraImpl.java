@@ -88,6 +88,9 @@ public class DijkstraImpl {
 		
 		System.out.println(caminoMasCorto);
 		
+		System.out.println("Grado minimo: " + grafo.getGradoMinimo());
+		System.out.println("Grado maximo: " + grafo.getGradoMaximo());
+		
 //		ResultadoDijkstra resultado = dijkstra.ejecutar(grafo, grafo.getNodo(0));
 //		Map<Nodo, Integer> distancias = resultado.getDistancias();
 //		Map<Nodo, Nodo> camino = resultado.getCamino();

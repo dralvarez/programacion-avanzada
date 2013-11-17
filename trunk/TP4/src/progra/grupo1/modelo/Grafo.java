@@ -196,5 +196,9 @@ public class Grafo {
 		return nodoConMaximoGrado.getGrado();
 	}	
 	
+	public boolean esRegular(){
+		return this.getGradoMinimo() == this.getGradoMaximo();
+	}
+	
 	
 }
