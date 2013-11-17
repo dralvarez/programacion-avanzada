@@ -8,7 +8,7 @@ public class ColorProvider {
 											"BORDO", "DORADO", "PLATEADO"};
 
 	public String getColor(int indice){
-		return String.valueOf(indice);
+		return String.format("COLOR_%d",indice);
 	}
 	
 }

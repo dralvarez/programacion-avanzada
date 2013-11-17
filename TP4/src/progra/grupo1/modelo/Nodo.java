@@ -58,6 +58,6 @@ public class Nodo implements Indexable{
 	
 	@Override
 	public String toString() {
-		return String.format("Nodo %d: | Color %s | Grado %s", indice, color, grado); 
+		return String.format("N%d", indice+1); 
 	}
 }

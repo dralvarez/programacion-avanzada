@@ -5,12 +5,15 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import progra.grupo1.InterpreteArchivoGrafo;
 import progra.grupo1.generador.GeneradorGrafosAleatoriosPorPorcentajeAdyacencia;
-import progra.grupo1.generador.GeneradorGrafosAleatoriosPorProbabilidad;
 import progra.grupo1.modelo.Grafo;
 import progra.grupo1.modelo.Nodo;
 import progra.grupo1.proceso.estrategia.MatulaComparator;
+import progra.grupo1.proceso.estrategia.WelshPowellComparator;
 import progra.grupo1.proceso.helper.ColorProvider;
+import progra.grupo1.proceso.helper.VerificadorColoreador;
+import progra.grupo1.proceso.helper.VerificadorColoreadorWelshPowell;
 
 public class ColoreadorGrafos {
 
@@ -77,13 +80,25 @@ public class ColoreadorGrafos {
 
 	public static void main(String[] args) {
 		ColoreadorGrafos coloreador = new ColoreadorGrafos();
+		GeneradorGrafosAleatoriosPorPorcentajeAdyacencia gga = new GeneradorGrafosAleatoriosPorPorcentajeAdyacencia();
+		InterpreteArchivoGrafo interprete = new InterpreteArchivoGrafo();
+		VerificadorColoreador verificador = new VerificadorColoreadorWelshPowell();
 		
-		GeneradorGrafosAleatoriosPorProbabilidad gga = new GeneradorGrafosAleatoriosPorProbabilidad();
-		Grafo grafo = gga.generar(1000, 0.5);
+//		Grafo grafo = interprete.generarGrafo("recursos/grafo.in");
+		Grafo grafo = gga.generar(30,0.4);
+		assert grafo.getCantidadNodos() == 6;
+		assert grafo.getCantidadAdyacencias() == 7;
+//		Grafo grafo = gga.generar(1000, 0.5);
 		
-		coloreador.colorear(grafo);		
+		coloreador.colorear(grafo, new WelshPowellComparator());		
 		System.out.println(grafo);
+		System.out.println("Colores: " + grafo.getColores());
 		System.out.println("Numero cromatico: " + grafo.getNumeroCromatico());
+		
+		boolean pasoVerificacion = verificador.verificar(grafo);
+		
+		System.out.println("Resultado verificacion: " + pasoVerificacion);
+		
 		
 	}
 }

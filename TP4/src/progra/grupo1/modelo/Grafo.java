@@ -9,11 +9,15 @@ public class Grafo {
 
 	private List<Nodo> nodos;
 	
-	private MatrizSimetrica matrizAdyacencia;
+	protected MatrizAdyacencia matrizAdyacencia;
 
 	public Grafo(int cantidadNodos){
 		nodos = generarNodos(cantidadNodos);
-		matrizAdyacencia = new MatrizSimetrica(cantidadNodos);
+		matrizAdyacencia = crearMatrizAdyacencia(cantidadNodos);
+	}
+
+	protected MatrizAdyacencia crearMatrizAdyacencia(int cantidadNodos) {
+		return new MatrizSimetrica(cantidadNodos);
 	}
 	
 	protected List<Nodo> generarNodos(int cantidadNodos) {
@@ -28,6 +32,12 @@ public class Grafo {
 
 	public void addAdyacencia(Adyacencia adyacencia){
 		this.addAdyacencia(adyacencia.getIndice1(), adyacencia.getIndice2(), adyacencia);
+	}
+	
+	public void addAdyacencia(Nodo nodo1, Nodo nodo2, int distancia){
+		Adyacencia adyacencia = new Adyacencia(nodo1.getIndice(), nodo2.getIndice());
+		adyacencia.setDistancia(distancia);
+		this.addAdyacencia(adyacencia);
 	}
 	
 	public void addAdyacencia(Nodo nodo1, Nodo nodo2){
@@ -92,16 +102,18 @@ public class Grafo {
 	public int getCantidadNodos() {
 		return this.nodos.size();
 	}
-
+	
 	public int getCantidadAdyacencias(){
 		int cantidad = 0;
-		int dimension = matrizAdyacencia.getDimension();
 		
-		for(int i=0 ; i < dimension ; i++){
-			if(matrizAdyacencia.getVectorEquivalente()[i] != null){
-				cantidad++;
+		for(Nodo n1 : nodos){
+			for(Nodo n2 : nodos){
+				if(n1.esAdyacente(n2)){
+					cantidad++;
+				}
 			}
 		}
+		
 		return cantidad;
 	}
 	
@@ -135,14 +147,17 @@ public class Grafo {
 		return cantidadNodos * grado / 2;
 	}
 	
-	public int getNumeroCromatico(){
+	public Set<String> getColores(){
 		Set<String> colores = new HashSet<String>();
 		
 		for(Nodo n : nodos){
 			colores.add(n.getColor());
 		}
-		
-		return colores.size();
+		return colores;
+	}
+	
+	public int getNumeroCromatico(){
+		return getColores().size();
 	}
 	
 	public String toStringGradosYNodos(){
@@ -167,4 +182,6 @@ public class Grafo {
 
 		return esValido;
 	}
+	
+	
 }

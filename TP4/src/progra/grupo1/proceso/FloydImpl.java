@@ -17,8 +17,8 @@ public class FloydImpl {
 		List<Map<Nodo, Integer>> resultado = new ArrayList<Map<Nodo, Integer>>(nodos.size());
 		
 		for(Nodo nodo : nodos){
-			Map<Nodo, Integer> resultadoNodo = dijkstra.ejecutar(grafo, nodo);
-			resultado.add(resultadoNodo);
+//			Map<Nodo, Integer> resultadoNodo = dijkstra.ejecutar(grafo, nodo);
+//			resultado.add(resultadoNodo);
 		}
 		
 		return resultado;

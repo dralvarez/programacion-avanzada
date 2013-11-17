@@ -1,6 +1,6 @@
 package progra.grupo1.modelo;
 
-public class MatrizSimetrica {
+public class MatrizSimetrica implements MatrizAdyacencia{
 
 	private final Adyacencia[] vectorEquivalente;
 	private final int cantidadNodos;
@@ -56,11 +56,5 @@ public class MatrizSimetrica {
 	public int getCantidadNodos() {
 		return cantidadNodos;
 	}
-	
-	public Adyacencia[] getVectorEquivalente(){
-		return vectorEquivalente;
-	}
-	
-	
 	
 }

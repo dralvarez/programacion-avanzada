@@ -36,7 +36,12 @@ public	class Adyacencia implements Comparable<Adyacencia>{
 
 	@Override
 	public int compareTo(Adyacencia o) {
-		return (int) (this.orden*100 - o.orden*100);
+		if(this.orden > o.orden)
+			return 1;
+		else if (this.orden < o.orden)
+			return -1;
+		else
+			return 0;
 	}
 	
 	@Override
