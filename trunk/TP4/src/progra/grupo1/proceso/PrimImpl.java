@@ -26,6 +26,7 @@ public class PrimImpl {
 				
 				Adyacencia adyacenciaMinima = new Adyacencia(-1,-1);
 				adyacenciaMinima.setDistancia(Integer.MAX_VALUE);
+				
 				for(Nodo nodoEnEvaluacion : nodosYaEvaluados){
 					
 					for(Nodo nodoDestino : nodos){

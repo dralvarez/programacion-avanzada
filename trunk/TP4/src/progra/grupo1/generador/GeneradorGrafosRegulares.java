@@ -72,7 +72,7 @@ public class GeneradorGrafosRegulares {
 	
 	private void chequearSiEsPosibleGenerarGrafo(int cantidadNodos,
 			int gradoNodos) {
-		if (cantidadNodos * gradoNodos % 2 != 0 || cantidadNodos < gradoNodos)
+		if (!esPar(cantidadNodos * gradoNodos)|| cantidadNodos < gradoNodos)
 			throw new NoSePuedeGenerarUnGrafoRegularException(cantidadNodos, gradoNodos);
 	}
 
