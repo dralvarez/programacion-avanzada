@@ -4,11 +4,12 @@ import java.util.List;
 
 import progra.grupo1.modelo.Grafo;
 import progra.grupo1.modelo.Nodo;
+import progra.grupo1.proceso.helper.Interprete;
 import progra.grupo1.utils.FileUtils;
 
-public class InterpreteArchivoGrafo {
+public class InterpreteArchivoGrafo implements Interprete<Grafo>{
 	
-	public Grafo generarGrafo(String path){
+	public Grafo generar(String path){
 		
 		List<String> contenido = FileUtils.leerArchivo(path);
 		String primeraLinea = contenido.iterator().next();

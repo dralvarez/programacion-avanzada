@@ -47,7 +47,7 @@ public class FloydConCamino {
 		FloydConCamino floyd = new FloydConCamino();
 		InterpreteArchivoGrafo interprete = new InterpreteArchivoGrafo();
 		GrafoDirigido grafo = (GrafoDirigido) interprete
-				.generarGrafo("recursos/grafo.in");
+				.generar("recursos/grafo.in");
 
 		ResultadoFloyd ejecutar = floyd.ejecutar(grafo);
 
