@@ -18,7 +18,7 @@ public class KruskalImpl {
 	public List<Adyacencia> ejecutar(Grafo grafo){
 		List<Adyacencia> arbolAbarcador = new ArrayList<Adyacencia>();
 		
-		List<Adyacencia> adyacencias = getAdyacencias(grafo);
+		List<Adyacencia> adyacencias = grafo.getAdyacencias();
 		
 		Collections.sort(adyacencias, new AdyacenciaPorDistanciaComparator());
 		
@@ -52,21 +52,6 @@ public class KruskalImpl {
 		return nodosUnidos.contains(nodo1) && nodosUnidos.contains(nodo2);
 	}
 
-	private List<Adyacencia> getAdyacencias(Grafo grafo) {
-		List<Adyacencia> adyacencias = new ArrayList<Adyacencia>();
-		
-		for(Nodo n1 : grafo.getNodos()){
-			for(Nodo n2 : grafo.getNodos()){
-				if(n1.esAdyacente(n2)){
-					Adyacencia adyacencia = grafo.getAdyacencia(n1, n2);
-					adyacencias.add(adyacencia);
-				}
-			}
-		}
-		
-		return adyacencias;
-	}
-	
 	public static void main(String[] args) {
 		Interprete<Grafo> interprete = new InterpreteArchivoGrafo();
 		KruskalImpl kruskal = new KruskalImpl();

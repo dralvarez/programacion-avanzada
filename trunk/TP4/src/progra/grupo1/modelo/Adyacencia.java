@@ -46,7 +46,7 @@ public	class Adyacencia implements Comparable<Adyacencia>{
 	
 	@Override
 	public String toString() {
-		return "(" + indice1 + " <-> " + indice2 + ")";
+		return "(" + (indice1+1) + " <-> " + (indice2+1) + ")";
 	}
 	
 }

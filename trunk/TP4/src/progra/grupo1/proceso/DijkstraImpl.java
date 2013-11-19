@@ -69,14 +69,14 @@ public class DijkstraImpl {
 		int cantidadNodos = grafo.getCantidadNodos();
 		Map<Nodo, Integer> distancias = new HashMap<Nodo, Integer>(cantidadNodos);
 		
-		for(int i=0;i < cantidadNodos ; i++){
-			distancias.put(grafo.getNodo(i), Integer.MAX_VALUE);
+		for(Nodo nodo : grafo.getNodos()){
+			distancias.put(nodo, Integer.MAX_VALUE);
 		}
 		
 		return distancias;
 	}
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		DijkstraImpl dijkstra = new DijkstraImpl();
 		InterpreteArchivoGrafo interprete = new InterpreteArchivoGrafo();
 		
@@ -112,14 +112,23 @@ public class DijkstraImpl {
 		Map<Nodo, Nodo> camino = ejecutar.getCamino();
 		
 		Nodo nodoPrevio = camino.get(destino);
-		caminoMasCorto.add(destino);
-		while(!nodoPrevio.equals(origen)){
-			caminoMasCorto.add(nodoPrevio);
-			nodoPrevio = camino.get(nodoPrevio);
-		}
-		caminoMasCorto.add(origen);
 		
-		Collections.reverse(caminoMasCorto);
+		if(nodoPrevio != null){
+			
+			caminoMasCorto.add(destino);
+			while(nodoPrevio != null && !nodoPrevio.equals(origen)){
+				caminoMasCorto.add(nodoPrevio);
+				nodoPrevio = camino.get(nodoPrevio);
+			}
+			caminoMasCorto.add(origen);
+			
+			Collections.reverse(caminoMasCorto);
+			
+			if(!caminoMasCorto.contains(origen) || !caminoMasCorto.contains(destino)){
+				caminoMasCorto = new ArrayList<Nodo>();
+			}
+			
+		}
 		
 		return caminoMasCorto;
 	}

@@ -71,7 +71,15 @@ public class Grafo {
 	}
 	
 	public Nodo getNodo(int indice){
-		return nodos.get(indice);
+		Nodo nodo = null;
+		
+		for(Nodo n : nodos){
+			if(n.getIndice() == indice){
+				nodo = n;
+			}
+		}
+		
+		return nodo;
 	}
 	
 	@Override
@@ -80,17 +88,12 @@ public class Grafo {
 
 		StringBuilder b = new StringBuilder();
 		
-//		for(int i=0; i<cantidadNodos; i++){
-//			Nodo n = this.getNodo(i);
-//			b.append(n + ", ");
-//		}
-		
 		for(int i=0; i<cantidadNodos; i++){
-			for(int j=1; j<cantidadNodos;j++){
+			for(int j=0; j<cantidadNodos;j++){
 				
-				if(i != j && sonAdyacentes(i, j)){
+				if(sonAdyacentes(i, j)){
 					Adyacencia adyacencia = this.matrizAdyacencia.get(i, j);
-					b.append(String.format("(%d,%d) = %d, ", i, j, adyacencia.getDistancia()));
+					b.append(String.format("(%d,%d) = %d, ", i+1, j+1, adyacencia.getDistancia()));
 				}
 			}
 		}
@@ -199,6 +202,45 @@ public class Grafo {
 	public boolean esRegular(){
 		return this.getGradoMinimo() == this.getGradoMaximo();
 	}
+
+	public void eliminarNodos(List<Nodo> nodosAEliminar) {
+		for(Nodo nodo : nodosAEliminar){
+			this.eliminarNodo(nodo);
+		}
+	}
+
+	public void eliminarNodo(Nodo nodo) {
+		eliminarAdyacencias(nodo);
+		nodos.remove(nodo);
+		
+	}
 	
+	public void eliminarAdyacencias(Nodo nodo) {
+		List<Adyacencia> adyacencias = getAdyacencias();
+		for(Adyacencia a : adyacencias){
+			if(a.getIndice1() == nodo.getIndice() || a.getIndice2() == nodo.getIndice()){
+				eliminarAdyacencia(a);
+			}
+		}
+	}
+
+	public void eliminarAdyacencia(Adyacencia a) {
+		this.addAdyacencia(a.getIndice1(), a.getIndice2(), null);
+	}
+
+	public List<Adyacencia> getAdyacencias() {
+		Set<Adyacencia> adyacencias = new HashSet<Adyacencia>();
+		
+		for(Nodo n1 : this.getNodos()){
+			for(Nodo n2 : this.getNodos()){
+				if(n1.esAdyacente(n2)){
+					Adyacencia adyacencia = this.getAdyacencia(n1, n2);
+					adyacencias.add(adyacencia);
+				}
+			}
+		}
+		
+		return new ArrayList<Adyacencia>(adyacencias);
+	}
 	
 }
