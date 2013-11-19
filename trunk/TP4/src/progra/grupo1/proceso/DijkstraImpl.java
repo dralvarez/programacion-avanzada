@@ -80,7 +80,7 @@ public class DijkstraImpl {
 		DijkstraImpl dijkstra = new DijkstraImpl();
 		InterpreteArchivoGrafo interprete = new InterpreteArchivoGrafo();
 		
-		Grafo grafo = interprete.generarGrafo("recursos/dijkstra2.in");
+		Grafo grafo = interprete.generar("recursos/dijkstra2.in");
 		Nodo origen = grafo.getNodo(0);
 		Nodo destino = grafo.getNodo(4);
 		
